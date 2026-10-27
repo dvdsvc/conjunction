@@ -113,7 +113,7 @@ flowchart TB
 
 High recall and high precision describe the intended division of work. A unified evaluation of the three-stage pipeline remains outstanding.
 
-## 3. Features and Research Ideas
+## 3. Feature Construction and Representation Learning
 
 ### 3.1 How are concept relationships represented?
 
@@ -134,7 +134,31 @@ The project explored several ways to describe a concept pair.
 
 BFS, propagation quantities, common neighbors, Adamic–Adar, local subgraphs and some structural statistics appear in different code versions. Community membership and continuous temporal change were considered in the design, but do not form a unified, validated implementation.
 
-### 3.2 Reducing generic hub effects
+### 3.2 How do numerical features and graph structure enter the model?
+
+Combining explicit numerical features with graph representations was already part of the earlier modeling approach. The PyTorch model separately encodes pair features, local neighborhoods and merged endpoint subgraphs, then fuses them into candidate ranking scores:
+
+| Branch | Main input | Role |
+|---|---|---|
+| PairMLP | Explicit structural features of a concept pair | Learn structural relationships between a node pair |
+| PENCIL-style Transformer | Local nodes, adjacency encoding and precomputed semantic representations | Interleave attention and graph message passing inside Transformer layers |
+| SubgraphGNN | Two endpoints and their merged subgraph | Model graph connections around a candidate relationship |
+
+The three representations are fused to produce candidate ranking scores. This organization explores whether pair features, individual neighborhoods and merged subgraphs provide complementary information. The retained implementations and attribution notes document their relationship to existing recommendation models, graph-learning methods and third-party code.
+
+**The PENCIL branch itself contains graph computation.** Local nodes form the Transformer input, with representations combining local position, adjacency and semantic information. For example, the retained v15 configuration uses 129 structural fields per node: 64 local-position fields, 64 adjacency fields and one normalized propagation score. This is distinct from the 21 pair features used by PairMLP.
+
+Each encoder layer performs attention, aggregates node states using local adjacency, applies a learned message transform and residual update, and then runs the feed-forward network. Four such layers precede pooling over valid nodes. Local edges therefore contribute both to input encoding and to representation updates inside the Transformer.
+
+```text
+Local structural and semantic node inputs
+  → attention → local-edge aggregation and residual update → feed-forward network
+  → repeat 4 layers → node pooling → PENCIL branch representation
+```
+
+Neighborhood construction varies by version. [Early v5](research/temporal/train_temporal_v5.py) selects a center concept and degree-ranked one-hop neighbors. [Later v15](research/temporal/train_temporal_v15.py) selects local nodes by PPR-like scores, then encodes their direct connections. Message passing uses one-hop edges within that selected graph. This in-layer module is separate from the parallel **SubgraphGNN**, which operates on the merged graph around both endpoints. See [Models](docs/models.md#graph-computation-inside-pencilencoder) for tensor layout and computation order.
+
+### 3.3 Reducing generic hub effects
 
 Two specialized concepts may both connect to a broad term such as “climate change,” yet that short path may offer little specific research context. A less connected intermediate concept may provide a more concrete literature lead. The project explores three ways to reduce generic hub effects in paths and features:
 
@@ -144,7 +168,7 @@ Two specialized concepts may both connect to a broad term such as “climate cha
 
 These designs have [code implementations](research/temporal/precompute_v15.py); their predictive benefit requires controlled comparisons.
 
-### 3.3 Bridge-concept prediction
+### 3.4 Bridge-concept prediction
 
 Candidate ranking asks which concepts may connect. The bridge stage then asks what intermediate knowledge could connect them. The design takes internal nodes on shortest paths between $A$ and $B$ in the historical co-occurrence graph as candidate bridges. Weighted graphs use shortest paths under the specified edge cost. These nodes provide mechanism leads; scientific mechanisms require supporting evidence from the original papers.
 
@@ -168,7 +192,7 @@ The retained code documents several changes in research tasks and models.
 
 ### 4.1 From paper citations to concept relationships
 
-Early work adapted recommendation and link-prediction methods to scientific paper networks, using citations, semantic representations and candidate ranking to explore potential relationships. The focus then shifted to temporal concept co-occurrence graphs and prediction targets based on changes in historical graph distance. The v15 route added local subgraphs, structural features and multiple representation branches.
+Early work adapted recommendation and link-prediction methods to scientific paper networks, using citations, semantic representations and candidate ranking to explore potential relationships. The focus then shifted to temporal concept co-occurrence graphs and prediction targets based on changes in historical graph distance. Local graph encoding, in-layer graph messages and multibranch fusion were already used in earlier versions. The v15 route retained this structure while changing candidate filtering, relevance labels and the ranking loss.
 
 Main source locations:
 
@@ -178,31 +202,7 @@ Main source locations:
 - [v15 models and training](research/temporal/train_temporal_v15.py)
 - [Later repair versions](research/temporal/fixes/)
 
-### 4.2 Neural models
-
-The later v15 implementation uses three PyTorch representation branches:
-
-| Branch | Main input | Role |
-|---|---|---|
-| PairMLP | 21 explicit graph features | Learn structural relationships between a node pair |
-| PENCIL-style Transformer | Local nodes, adjacency encoding and precomputed semantic representations | Interleave attention and graph message passing inside Transformer layers |
-| SubgraphGNN | Two endpoints and their merged subgraph | Model graph connections around a candidate relationship |
-
-The three representations are fused to produce candidate ranking scores. This organization explores whether pair features, individual neighborhoods and merged subgraphs provide complementary information. The retained implementations and attribution notes document their relationship to existing recommendation models, graph-learning methods and third-party code.
-
-**The PENCIL branch itself contains graph computation.** Local nodes form the Transformer input, with representations combining local position, adjacency and semantic information. In v15, each node has 129 structural fields: 64 local-position fields, 64 adjacency fields and one normalized propagation score. This is distinct from the 21 pair features used by PairMLP.
-
-Each encoder layer performs attention, aggregates node states using local adjacency, applies a learned message transform and residual update, and then runs the feed-forward network. Four such layers precede pooling over valid nodes. Local edges therefore contribute both to input encoding and to representation updates inside the Transformer.
-
-```text
-Local structural and semantic node inputs
-  → attention → local-edge aggregation and residual update → feed-forward network
-  → repeat 4 layers → node pooling → PENCIL branch representation
-```
-
-Neighborhood construction varies by version. [Early v5](research/temporal/train_temporal_v5.py) selects a center concept and degree-ranked one-hop neighbors. [Later v15](research/temporal/train_temporal_v15.py) selects local nodes by PPR-like scores, then encodes their direct connections. Message passing uses one-hop edges within that selected graph. This in-layer module is separate from the parallel **SubgraphGNN**, which operates on the merged graph around both endpoints. See [Models](docs/models.md#graph-computation-inside-pencilencoder) for tensor layout and computation order.
-
-### 4.3 Training and historical experiments
+### 4.2 Training and historical experiments
 
 The research tried classification, pairwise ranking, BPR, distance-change ranking and ranking losses with NDCG-based weights. Results were unsatisfactory and did not establish a consistent, reliable scientific discovery capability.
 

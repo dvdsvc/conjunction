@@ -15,7 +15,9 @@ The scientific subgraph models are local PyTorch implementations inspired by PEN
 
 The local candidate mask blocks direct candidate-to-candidate attention, but source tokens can attend to all candidates in a group. After multiple layers, information can travel indirectly through source tokens. This is not equivalent to strict independent scoring of each candidate or an exact transplant of the original recommendation mask.
 
-## Temporal v15: three representation branches
+## Temporal fusion model: three representation branches
+
+The three-branch fusion is already present in the archived [temporal v9 implementation](../history/workspace/train_temporal_v9.py), where PairMLP, PencilEncoder and SubgraphGNN outputs are concatenated before scoring. Attention interleaved with graph-message updates appears earlier in temporal v5. The table below reports the retained v15 dimensions as a concrete configuration, not the point when these mechanisms were introduced.
 
 | Branch | Input and computation | Output width |
 | --- | --- | --- |

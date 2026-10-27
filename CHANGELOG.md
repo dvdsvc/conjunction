@@ -1,5 +1,9 @@
 # Research presentation snapshot — 2026-10-26
 
+## 2026-10-27 — Put graph representations with feature construction
+
+Moved the neural representation explanation into the feature-construction section in both READMEs. Removed the implication that v15 introduced graph-in-Transformer computation or three-branch fusion: temporal v5 already includes interleaved graph updates, and archived v9 explicitly implements all three fusion branches. Kept version-specific dimensions as examples and corrected the implementation-history wording. Research code and experiment records are unchanged.
+
 ## 2026-10-27 — Explain graph computation inside PENCIL
 
 Expanded both READMEs and model/feature documentation to distinguish scalar pair features, the graph-message updates interleaved inside temporal PENCIL Transformer layers and the separate merged-subgraph GNN. Documented early one-hop neighbor selection versus later PPR-based node selection, the adjacency input layout and the exact message contraction. Clarified PENCIL method attribution. All research implementations and experiment records remain unchanged.
