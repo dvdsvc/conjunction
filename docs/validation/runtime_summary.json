@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-26",
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "commands": {
+    "numerical_tests": {
+      "command": "uv run --locked --offline --extra train python -B -m tests.test_research_contracts",
+      "exit_code": 0
+    },
+    "synthetic_pipeline": {
+      "command": "uv run --locked --offline --extra train python -B -m examples.synthetic_pipeline",
+      "exit_code": 0
+    },
+    "dispatcher_catalog": {
+      "command": "uv run --locked --offline --extra train python -B -m scripts.run_research",
+      "exit_code": 0,
+      "tasks": 5
+    },
+    "dispatcher_dry_run": {
+      "command": "uv run --locked --offline --extra train python -B -m scripts.run_research --task precompute-v15-fix --data-root data/pencil_data -- --fold 0",
+      "exit_code": 0,
+      "will_execute": false
+    },
+    "missing_root_guard": {
+      "exit_code": 2,
+      "expected": 2,
+      "no_output_created": true
+    }
+  },
+  "full_data_training_run": false,
+  "full_data_benchmark_run": false,
+  "pretrained_model_downloads": false,
+  "remote_training_server_access": false,
+  "hosted_ci_executed": false,
+  "synthetic_demo": "three optimizer steps; same-list metrics only"
+}

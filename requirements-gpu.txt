@@ -1,0 +1,3 @@
+# Optional original FoS precompute dependency; Linux CUDA 12 only.
+# Select the CuPy distribution that matches your CUDA installation.
+cupy-cuda12x>=13,<15

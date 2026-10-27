@@ -1,0 +1,185 @@
+{
+  "temporal_v15_pair_width": 21,
+  "fos_pair_width": 35,
+  "temporal_columns": [
+    {
+      "index": 0,
+      "name": "ppr_uv",
+      "definition": "Propagation-matrix entry P[u,v]"
+    },
+    {
+      "index": 1,
+      "name": "ppr_vu",
+      "definition": "P[v,u]"
+    },
+    {
+      "index": 2,
+      "name": "common_neighbors",
+      "definition": "(A A)[u,v] after diagonal removal"
+    },
+    {
+      "index": 3,
+      "name": "ppr_row_sum_sum",
+      "definition": "sum(P[u,:]) + sum(P[v,:]); variable name wcn"
+    },
+    {
+      "index": 4,
+      "name": "jaccard",
+      "definition": "CN / max(deg_u+deg_v-CN,1)"
+    },
+    {
+      "index": 5,
+      "name": "adamic_adar",
+      "definition": "A diag(1/log(max(deg,2))) A^T"
+    },
+    {
+      "index": 6,
+      "name": "degree_u",
+      "definition": "Degree of u"
+    },
+    {
+      "index": 7,
+      "name": "degree_v",
+      "definition": "Degree of v"
+    },
+    {
+      "index": 8,
+      "name": "clustering_u",
+      "definition": "Local clustering coefficient of u"
+    },
+    {
+      "index": 9,
+      "name": "clustering_v",
+      "definition": "Local clustering coefficient of v"
+    },
+    {
+      "index": 10,
+      "name": "average_ppr_u",
+      "definition": "P row sum / max(deg_u,1)"
+    },
+    {
+      "index": 11,
+      "name": "average_ppr_v",
+      "definition": "P row sum / max(deg_v,1)"
+    },
+    {
+      "index": 12,
+      "name": "log_degree_u",
+      "definition": "log1p(deg_u)"
+    },
+    {
+      "index": 13,
+      "name": "log_degree_v",
+      "definition": "log1p(deg_v)"
+    },
+    {
+      "index": 14,
+      "name": "jaccard_repeat",
+      "definition": "Exact duplicate of column 4"
+    },
+    {
+      "index": 15,
+      "name": "pure_common_neighbors",
+      "definition": "Common neighbors below nonzero-degree median"
+    },
+    {
+      "index": 16,
+      "name": "pure_adamic_adar",
+      "definition": "Adamic\u2013Adar restricted to that low-degree set"
+    },
+    {
+      "index": 17,
+      "name": "neighbor_cohesion",
+      "definition": "A3-derived ratio used by the original code"
+    },
+    {
+      "index": 18,
+      "name": "second_order_overlap",
+      "definition": "Jaccard-like overlap of binary two-hop rows"
+    },
+    {
+      "index": 19,
+      "name": "subgraph_connectivity_proxy",
+      "definition": "Degree-sum/local-size heuristic in original code"
+    },
+    {
+      "index": 20,
+      "name": "resistance_proxy",
+      "definition": "log1p(direct weight + two-hop product/2); not effective resistance"
+    }
+  ],
+  "fos_additional_columns": [
+    {
+      "index": 21,
+      "name": "kcore_u",
+      "definition": "Core number u"
+    },
+    {
+      "index": 22,
+      "name": "kcore_v",
+      "definition": "Core number v"
+    },
+    {
+      "index": 23,
+      "name": "fiedler_u",
+      "definition": "Fiedler vector component u"
+    },
+    {
+      "index": 24,
+      "name": "fiedler_v",
+      "definition": "Fiedler vector component v"
+    },
+    {
+      "index": 25,
+      "name": "community_edge_density",
+      "definition": "Neighbor cross-edge density heuristic"
+    },
+    {
+      "index": 26,
+      "name": "neighbor_degree_mean_u",
+      "definition": "Mean neighboring degree u"
+    },
+    {
+      "index": 27,
+      "name": "neighbor_degree_variance_u",
+      "definition": "Neighbor degree variance u"
+    },
+    {
+      "index": 28,
+      "name": "neighbor_degree_mean_v",
+      "definition": "Mean neighboring degree v"
+    },
+    {
+      "index": 29,
+      "name": "neighbor_degree_variance_v",
+      "definition": "Neighbor degree variance v"
+    },
+    {
+      "index": 30,
+      "name": "common_neighbor_kcore_mean",
+      "definition": "Mean core number of common neighbors"
+    },
+    {
+      "index": 31,
+      "name": "triangle_closure_u",
+      "definition": "Code-derived closure proxy u"
+    },
+    {
+      "index": 32,
+      "name": "triangle_closure_v",
+      "definition": "Code-derived closure proxy v"
+    },
+    {
+      "index": 33,
+      "name": "binary_two_hop",
+      "definition": "Binary A2 reachability"
+    },
+    {
+      "index": 34,
+      "name": "binary_two_hop_times_adj",
+      "definition": "Binary A2 multiplied by adjacency; not unrestricted 3-walk count"
+    }
+  ],
+  "node_structure_width": 129,
+  "semantic_width": 768
+}

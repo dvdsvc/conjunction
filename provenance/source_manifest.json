@@ -1,0 +1,215 @@
+{
+  "date": "2026-10-26",
+  "files": [
+    {
+      "source": "build_temporal_data.py",
+      "path": "research/temporal/build_temporal_data.py",
+      "source_sha256": "43c4de90adc20c4309538d2562305dd0d0eddc1fd800222635460856c2899c91",
+      "sha256": "43c4de90adc20c4309538d2562305dd0d0eddc1fd800222635460856c2899c91",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "build_temporal_v2.py",
+      "path": "research/temporal/build_temporal_v2.py",
+      "source_sha256": "ef1daa4fcbe9af3085df4ed7bf7bb2d9e468e4c8b8819599a185767878afdd2e",
+      "sha256": "ef1daa4fcbe9af3085df4ed7bf7bb2d9e468e4c8b8819599a185767878afdd2e",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "train_temporal_lbd.py",
+      "path": "research/temporal/train_temporal_lbd.py",
+      "source_sha256": "155c5c0a29f8cffa20fc33bbbc86b231d0c66d1e51438507e728207da9a844d8",
+      "sha256": "155c5c0a29f8cffa20fc33bbbc86b231d0c66d1e51438507e728207da9a844d8",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "train_temporal_v5.py",
+      "path": "research/temporal/train_temporal_v5.py",
+      "source_sha256": "a32f71de2e5356961ce91c85041b963c46981edc21219c8af9be3fc04b82284c",
+      "sha256": "a32f71de2e5356961ce91c85041b963c46981edc21219c8af9be3fc04b82284c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "precompute_v15.py",
+      "path": "research/temporal/precompute_v15.py",
+      "source_sha256": "f372b09e6f33ac5f70cf985791076bf879f252714ddacb61133f07b2ab5978d6",
+      "sha256": "f372b09e6f33ac5f70cf985791076bf879f252714ddacb61133f07b2ab5978d6",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "train_temporal_v15.py",
+      "path": "research/temporal/train_temporal_v15.py",
+      "source_sha256": "205359a3a401f1aead8cb8dcada9f584cf56c6c1d78ccc4e5bcbd87eb18a1386",
+      "sha256": "205359a3a401f1aead8cb8dcada9f584cf56c6c1d78ccc4e5bcbd87eb18a1386",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "eval_v15_fast.py",
+      "path": "research/temporal/eval_v15_fast.py",
+      "source_sha256": "4982d9d77f77729dea3515f68a0e4977c06e267bb1a51dca9777eb3f82fae479",
+      "sha256": "4982d9d77f77729dea3515f68a0e4977c06e267bb1a51dca9777eb3f82fae479",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "server_code/autodl-tmp/openalex_data/pencil_data/build_temporal_l3.py",
+      "path": "research/temporal/build_temporal_l3.py",
+      "source_sha256": "2413266ae65f2daccd5913bdba57bb8cb4e46d6188aa39aca63899c480eb470e",
+      "sha256": "2413266ae65f2daccd5913bdba57bb8cb4e46d6188aa39aca63899c480eb470e",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "retained_lbd_v15_fix/precompute_v15_fix.py",
+      "path": "research/temporal/fixes/precompute_v15_fix.py",
+      "source_sha256": "71e2e083354a316c240138cab822305ad15a61b638a6ea6035aa9ce110c0ea25",
+      "sha256": "71e2e083354a316c240138cab822305ad15a61b638a6ea6035aa9ce110c0ea25",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "retained_lbd_v15_fix/train_temporal_v15_fix.py",
+      "path": "research/temporal/fixes/train_temporal_v15_fix.py",
+      "source_sha256": "5205b759cd9d51c499d1ae01a4110e2d354ee079d52a62d3f35d683353922019",
+      "sha256": "5205b759cd9d51c499d1ae01a4110e2d354ee079d52a62d3f35d683353922019",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "build_fos_data.py",
+      "path": "research/fos/build_fos_data.py",
+      "source_sha256": "de027e77aa136a29510d7ec9128012ae19edfcac96dbfbe24e324f98248876fc",
+      "sha256": "de027e77aa136a29510d7ec9128012ae19edfcac96dbfbe24e324f98248876fc",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "precompute_fos_v15.py",
+      "path": "research/fos/precompute_fos_v15.py",
+      "source_sha256": "25b175df7bcd49080bb44cf6aae6da0f6a9d022e9e2a019e80a772eb99493ef3",
+      "sha256": "25b175df7bcd49080bb44cf6aae6da0f6a9d022e9e2a019e80a772eb99493ef3",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "train_fos_v15.py",
+      "path": "research/fos/train_fos_v15.py",
+      "source_sha256": "d309f31643dda004370b8df87dd1a0b295f2fe43e927430f9520a2a32de234e0",
+      "sha256": "d309f31643dda004370b8df87dd1a0b295f2fe43e927430f9520a2a32de234e0",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/process_data.py",
+      "path": "research/citation/process_data.py",
+      "source_sha256": "4aab09c634ec5cb80b8d7ed3901ef85288155f5324641b7bca880890cf95032f",
+      "sha256": "4aab09c634ec5cb80b8d7ed3901ef85288155f5324641b7bca880890cf95032f",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/build_real_bridges_v3.py",
+      "path": "research/citation/build_real_bridges_v3.py",
+      "source_sha256": "4c7aa18a9b2c2db5cb2ac2a8794121444cd6a4e66d9dcdca7b2c58f460a332b1",
+      "sha256": "4c7aa18a9b2c2db5cb2ac2a8794121444cd6a4e66d9dcdca7b2c58f460a332b1",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/build_pencil_data.py",
+      "path": "research/citation/build_pencil_data.py",
+      "source_sha256": "8f037023b72f7e32f58ace2aaac1ff09a07ff5b544d38e0fa94d00a25ab899d2",
+      "sha256": "8f037023b72f7e32f58ace2aaac1ff09a07ff5b544d38e0fa94d00a25ab899d2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/encode_concepts_scibert.py",
+      "path": "research/citation/encode_concepts_scibert.py",
+      "source_sha256": "637ddba0db6fded6173e0bbfde6d675f7ca0e18e9fb7d710eff8e088dc3b5254",
+      "sha256": "637ddba0db6fded6173e0bbfde6d675f7ca0e18e9fb7d710eff8e088dc3b5254",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/encode_titles.py",
+      "path": "research/citation/encode_titles.py",
+      "source_sha256": "9f37324372ee6614e94ef87d292e57ae6bf7d3de3d6bd5ec86c12a7f9a2c31f2",
+      "sha256": "9f37324372ee6614e94ef87d292e57ae6bf7d3de3d6bd5ec86c12a7f9a2c31f2",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/phoenix_model.py",
+      "path": "research/citation/phoenix_model.py",
+      "source_sha256": "803d16cb90fadc5dc5c8feb3bb59268a290b1ced3ef666c36ebc050858013fbe",
+      "sha256": "803d16cb90fadc5dc5c8feb3bb59268a290b1ced3ef666c36ebc050858013fbe",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/train_phoenix.py",
+      "path": "research/citation/train_phoenix.py",
+      "source_sha256": "084499d1e8785fa187a808c20f2032e200d2015ad8878b3e17bc5a0836eec185",
+      "sha256": "084499d1e8785fa187a808c20f2032e200d2015ad8878b3e17bc5a0836eec185",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/pencil_v5_model.py",
+      "path": "research/citation/pencil_v5_model.py",
+      "source_sha256": "7e8d0cc848b188fd1a71e93abf817c357c687b730b293dcf0f3ac854bd80f1d4",
+      "sha256": "7e8d0cc848b188fd1a71e93abf817c357c687b730b293dcf0f3ac854bd80f1d4",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/train_pencil_v5_iso.py",
+      "path": "research/citation/train_pencil_v5_iso.py",
+      "source_sha256": "1d968bc8792575858b0218387b1df7d0457e33e7792723ea531cb80520f3699c",
+      "sha256": "1d968bc8792575858b0218387b1df7d0457e33e7792723ea531cb80520f3699c",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/precompute_v5.py",
+      "path": "research/citation/precompute_v5.py",
+      "source_sha256": "1dc83fe6cec80c03d10f999eb55c59293e0a3efe5396e472049653c60101c5a5",
+      "sha256": "1dc83fe6cec80c03d10f999eb55c59293e0a3efe5396e472049653c60101c5a5",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/eval_real_bridges.py",
+      "path": "research/citation/eval_real_bridges.py",
+      "source_sha256": "e1452ce570f14121a2be05cf565d58ce9591e50cadf017a7ab58f7b35f3c1b78",
+      "sha256": "e1452ce570f14121a2be05cf565d58ce9591e50cadf017a7ab58f7b35f3c1b78",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/evaluate_lbd.py",
+      "path": "research/citation/evaluate_lbd.py",
+      "source_sha256": "d9d93a3f70335bad5eaf9b9f1a359ea0c17cb03dabc9d3c3ce6eb168e14319f5",
+      "sha256": "d9d93a3f70335bad5eaf9b9f1a359ea0c17cb03dabc9d3c3ce6eb168e14319f5",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/eval_v5_iso.py",
+      "path": "research/citation/eval_v5_iso.py",
+      "source_sha256": "6d6e061cea017c7b1ac669660f4fb8663e1253395eee5920546cce3b3645df01",
+      "sha256": "6d6e061cea017c7b1ac669660f4fb8663e1253395eee5920546cce3b3645df01",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/README.md",
+      "path": "provenance/citation_history.sanitized.md",
+      "source_sha256": "2e5222efd32d9150500e5554f6d0072b9a5f09465ea0b9a04199779ea826e1f0",
+      "sha256": "eceb3897607e1fa010e085f3dbe97deccd42de92e58b1a6db24ebd1a5e852c4a",
+      "treatment": "historical README sanitized: connection/credential section or line removed; not a current benchmark report"
+    },
+    {
+      "source": "README_temporal_lbd.md",
+      "path": "provenance/temporal_history.sanitized.md",
+      "source_sha256": "cc83fcfbea5d6c4efcc7d5474f5715531aefcc394fc409f2c469b79d9567e04c",
+      "sha256": "bc312f59a2d6aab24915136b161ef6bc8d1a67eacc8fca17bd4f943503d62c58",
+      "treatment": "historical README sanitized: connection/credential section or line removed; not a current benchmark report"
+    },
+    {
+      "source": "server_code/autodl-tmp/openalex_data/pencil_data/build_ext_years_l3.py",
+      "path": "research/temporal/build_ext_years_l3.py",
+      "source_sha256": "17ae7b18fe18ed457d202cb64ecbd98fd8b8682ce4a75a6f5bd1ef6b2b40b0bf",
+      "sha256": "17ae7b18fe18ed457d202cb64ecbd98fd8b8682ce4a75a6f5bd1ef6b2b40b0bf",
+      "treatment": "byte-identical"
+    },
+    {
+      "source": "openalex_lbd/pencil/LICENSE",
+      "path": "licenses/Apache-2.0.txt",
+      "source_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "treatment": "upstream license preserved; not a project-wide license choice"
+    }
+  ]
+}

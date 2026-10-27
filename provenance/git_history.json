@@ -1,0 +1,25 @@
+{
+  "scope": "source workspace history; not a substitute for individual contribution confirmation",
+  "commits": [
+    {
+      "sha": "39bac5ad924a5d5d7c2efa28e37e55ad6b9078dc",
+      "date": "2026-06-23",
+      "subject": "temporal LBD: pairwise ranking loss + rejection sampling"
+    },
+    {
+      "sha": "9c91080b12ab48919e19a7237bed5bd3b80a5405",
+      "date": "2026-06-23",
+      "subject": "add pipeline wrapper scripts for automated run + shutdown"
+    },
+    {
+      "sha": "ee7c827a73c9aba83c1f2e6317abcc6fc658cfdc",
+      "date": "2026-06-23",
+      "subject": "vectorized subgraph building, full matrix pairs, simplified eval"
+    },
+    {
+      "sha": "29bbcd1becb6ce8ca490b1b199342c9a63ab6b02",
+      "date": "2026-06-23",
+      "subject": "BFS + full eval: exact distances faster, score all 400M eligible pairs"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "evidence_type": "local archived precompute metadata/index JSON; no checkpoint or full feature arrays bundled",
+  "folds": [
+    {
+      "fold": 0,
+      "window": "2005→2012",
+      "metadata": {
+        "fold": 0,
+        "window": "2005→2012",
+        "MAX_MERGED": 256,
+        "pair_feat_dim": 21,
+        "label": "relevance grades (4/3/2/1/0) based on dist_t2",
+        "sampling": "t1 2-hop, filter: pure_cn>=1, weighted_gravity>0, aa>0",
+        "relevance": {
+          "4": "dist_t2 ≤ 1.0",
+          "3": "dist_t2 ∈ (1.0, 2.0]",
+          "2": "dist_t2 ∈ (2.0, 5.0]",
+          "1": "dist_t2 ∈ (5.0, 10.0]",
+          "0": "dist_t2 > 10"
+        }
+      },
+      "metadata_sha256": "11d49f84f5c4b9bf5e85fd825d778a00442fc17d5ae1ffed9f10b3370d14c514",
+      "candidate_index_sha256": "2072ba8c855b7b61a6c18905491f53cd49b61d66dc5df34506e8c4181d7937cf",
+      "anchors_in_saved_index": 3430,
+      "mapped_pair_entries": 844408,
+      "max_pair_index_plus_one": 846016,
+      "index_extent_minus_entry_count": 1608,
+      "status": "archived index statistics; not an accuracy measure"
+    },
+    {
+      "fold": 1,
+      "window": "2012→2015",
+      "metadata": {
+        "fold": 1,
+        "window": "2012→2015",
+        "MAX_MERGED": 256,
+        "pair_feat_dim": 21,
+        "label": "relevance grades (4/3/2/1/0) based on dist_t2",
+        "sampling": "t1 2-hop, filter: pure_cn>=1, weighted_gravity>0, aa>0",
+        "relevance": {
+          "4": "dist_t2 ≤ 1.0",
+          "3": "dist_t2 ∈ (1.0, 2.0]",
+          "2": "dist_t2 ∈ (2.0, 5.0]",
+          "1": "dist_t2 ∈ (5.0, 10.0]",
+          "0": "dist_t2 > 10"
+        }
+      },
+      "metadata_sha256": "59792ccc84f07ea0e0578f25b74132ea1c0df93429449e52e9345618969efadd",
+      "candidate_index_sha256": "6229e4d955c502fd079009d9473470d3df8f59b1d152d20808ca1516aca03744",
+      "anchors_in_saved_index": 4101,
+      "mapped_pair_entries": 1263445,
+      "max_pair_index_plus_one": 1265468,
+      "index_extent_minus_entry_count": 2023,
+      "status": "archived index statistics; not an accuracy measure"
+    },
+    {
+      "fold": 2,
+      "window": "2015→2017",
+      "metadata": {
+        "fold": 2,
+        "window": "2015→2017",
+        "MAX_MERGED": 256,
+        "pair_feat_dim": 21,
+        "label": "relevance grades (4/3/2/1/0) based on dist_t2",
+        "sampling": "t1 2-hop, filter: pure_cn>=1, weighted_gravity>0, aa>0",
+        "relevance": {
+          "4": "dist_t2 ≤ 1.0",
+          "3": "dist_t2 ∈ (1.0, 2.0]",
+          "2": "dist_t2 ∈ (2.0, 5.0]",
+          "1": "dist_t2 ∈ (5.0, 10.0]",
+          "0": "dist_t2 > 10"
+        }
+      },
+      "metadata_sha256": "162e2a7cbe88848af82da54a080052f441cd62ab5eae8f3963ff6daf64443ca9",
+      "candidate_index_sha256": "d294534af9ea3f63f501365488e9b77eabce5e0b9700df53583dff787ced4eeb",
+      "anchors_in_saved_index": 4352,
+      "mapped_pair_entries": 1463494,
+      "max_pair_index_plus_one": 1465772,
+      "index_extent_minus_entry_count": 2278,
+      "status": "archived index statistics; not an accuracy measure"
+    },
+    {
+      "fold": 3,
+      "window": "2017→2021",
+      "metadata": {
+        "fold": 3,
+        "window": "2017→2021",
+        "MAX_MERGED": 256,
+        "pair_feat_dim": 21,
+        "label": "relevance grades (4/3/2/1/0) based on dist_t2",
+        "sampling": "t1 2-hop, filter: pure_cn>=1, weighted_gravity>0, aa>0",
+        "relevance": {
+          "4": "dist_t2 ≤ 1.0",
+          "3": "dist_t2 ∈ (1.0, 2.0]",
+          "2": "dist_t2 ∈ (2.0, 5.0]",
+          "1": "dist_t2 ∈ (5.0, 10.0]",
+          "0": "dist_t2 > 10"
+        }
+      },
+      "metadata_sha256": "dfb8020f36daf59fa0e8d44a6550f3d2190b397699fd4f75b44b83ed28db6897",
+      "candidate_index_sha256": "69c00c7193f3ba261fd67a0f02ef8bf140c915c7420220f0038fb67003cacb68",
+      "anchors_in_saved_index": 4481,
+      "mapped_pair_entries": 1582244,
+      "max_pair_index_plus_one": 1584684,
+      "index_extent_minus_entry_count": 2440,
+      "status": "archived index statistics; not an accuracy measure"
+    },
+    {
+      "fold": 4,
+      "window": "2021→2024",
+      "metadata": {
+        "fold": 4,
+        "window": "2021→2024",
+        "MAX_MERGED": 256,
+        "pair_feat_dim": 21,
+        "label": "relevance grades (4/3/2/1/0) based on dist_t2",
+        "sampling": "t1 2-hop, filter: pure_cn>=1, weighted_gravity>0, aa>0",
+        "relevance": {
+          "4": "dist_t2 ≤ 1.0",
+          "3": "dist_t2 ∈ (1.0, 2.0]",
+          "2": "dist_t2 ∈ (2.0, 5.0]",
+          "1": "dist_t2 ∈ (5.0, 10.0]",
+          "0": "dist_t2 > 10"
+        }
+      },
+      "metadata_sha256": "2ceeed98064ecd965c9c2488261801db3cca30aca55711c1620a4532c505a68e",
+      "candidate_index_sha256": "a6780b96e3d5aacc0ccf29a75ecda124b9b8a582f084c05ac82979ba74b4daba",
+      "anchors_in_saved_index": 4734,
+      "mapped_pair_entries": 1831632,
+      "max_pair_index_plus_one": 1834302,
+      "index_extent_minus_entry_count": 2670,
+      "status": "archived index statistics; not an accuracy measure"
+    }
+  ]
+}

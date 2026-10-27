@@ -1,0 +1,50 @@
+{
+  "data_kind": "synthetic graph and random 768-d vectors; pipeline check, not a research benchmark",
+  "source_variant": "retained v15_fix scripts, not newly rewritten model code",
+  "device": "cpu",
+  "concepts": 70,
+  "historical_edges": 70,
+  "future_edges": 94,
+  "precomputed_pairs": 140,
+  "anchors": 70,
+  "pair_feature_dim": 21,
+  "structure_shape": [
+    70,
+    64,
+    129
+  ],
+  "semantic_input": "random; not downloaded or encoded SciBERT",
+  "model_trainable_parameters": 4224065,
+  "optimizer_steps": 3,
+  "loss_trace": [
+    0.6882305145263672,
+    0.6540800929069519,
+    0.6295042037963867
+  ],
+  "finite_nonzero_gradients": true,
+  "parameter_changed": true,
+  "training_candidate_labels": [
+    4.0,
+    3.0
+  ],
+  "training_candidate_scores": [
+    0.1658669263124466,
+    -0.0316079817712307
+  ],
+  "same_training_list_metrics": {
+    "NDCG@2": 1.0,
+    "Precision@1": 1,
+    "Recall@1": 1.0,
+    "MRR": 1.0
+  },
+  "original_functions_used": [
+    "build_graph",
+    "compute_ppr",
+    "process_split",
+    "build_concept_feature_table",
+    "AnchorDatasetV15",
+    "PencilV15",
+    "lambdarank_loss",
+    "compute_ndcg_at_k"
+  ]
+}
