@@ -1,5 +1,9 @@
 # Research presentation snapshot — 2026-10-26
 
+## 2026-10-27 — Restore the fuller research narrative
+
+Revised both READMEs from the earlier author-directed narrative rather than the compressed summary. Restored motivation and reasoning, and expanded the account of graph sparsity, concept-identity errors, implementation repairs, task-protocol differences and the decision to pause. Retained the staged framework, hub controls, bridge example and quick start. Research code, results and archived versions are unchanged.
+
 ## 2026-10-27 — Concise academic README and staged design
 
 Condensed both READMEs into a more formal research overview while retaining the seven-section narrative and fish-oil diagrams. Added the Screen → Rank → Bridge → downstream-validation design, three implemented hub controls and the illustrative Phosphide/Lightning bridge format. Clarified bounded path recovery in the historical three-hop evaluator and distinguished it from unfinished standalone bridge output and scientific mechanism validation. Research code and experiment records remain unchanged.
