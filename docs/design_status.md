@@ -4,6 +4,14 @@
 
 The main READMEs now follow the author's later seven-section narrative, including the decision to pause the project. This page retains the technical source reconciliation from the earlier draft; the reference-statement table below concerns that earlier reference, not the current README outline.
 
+## Screen, Rank and Bridge: design and retained implementation
+
+The design separates broad candidate screening, neural ranking and bridge explanation, followed by expert/agent validation. Recall and precision describe the intended priorities of the first two stages, not measured end-to-end guarantees. Candidate preprocessing and model scoring are implemented, with the protocol differences documented below.
+
+For the bridge stage, [eval_3hop.py](../history/workspace/eval_3hop.py) defines `find_shortest_path` using bounded BFS and prioritizes recovered path nodes during subgraph construction. This is a concrete path-processing component, not a standalone intermediate-concept prediction output. The historical [show_bridges.py](../history/server_snapshot/show_bridges.py) reports endpoint candidate names, scores and distance-change labels. Its `BRIDGE` label does not identify the internal nodes of a path.
+
+The README therefore presents bridge-concept output as an unfinished stage supported by existing path recovery. Internal nodes on historical shortest paths can supply association leads; interpreting them as a scientific mechanism requires paper-level evidence. The Phosphide/Lightning example specifies an intended output format, not an observed model result or a verified graph path. This connection is already discussed in [Hess et al. (2021)](https://www.nature.com/articles/s41467-021-21849-2), so any first-co-occurrence target needs an explicit historical cutoff and verified concept mapping.
+
 ## Why the expanded source audit matters
 
 The repository is a curated snapshot, not the full history of the original working directory. The 2026-10-27 README revision therefore inspected original root scripts, the paper-model directory, recursive `server_code` backups and the local source archive in addition to the selected 27 research files. The local server backup includes nested duplicate copies and July-dated source snapshots; it does not establish the current state of a live remote training server.
@@ -34,8 +42,8 @@ The owner recalls an implemented PMI-weighted version. Its exact source/call pat
 | “Semantic embeddings are ineffective,” with 0.9414/0.9422 means | The corresponding experiment/prediction record was not located; values are not adopted as results. Similar group means alone would not establish general ineffectiveness. |
 | “Zero semantic dependency” | Does not describe the retained v15 architecture. Separate structural representations from semantic inputs and propose a matched ablation. |
 | “PMI graph construction implemented” | Reconcile the actual source version; report the traceable degree-cost implementation precisely. |
-| “Stages 1–3 implemented” | Candidate selection and ranking code exist, but a validated integrated cascade and dedicated bridge-concept head are not established. |
-| “Shortest-path nodes give the formation mechanism” | Structural paths can supply association evidence; causal/scientific mechanism requires separate grounding. Historical `show_bridges` scripts display named candidate pairs and labels, not a trained mechanism head. |
+| “Stages 1–3 implemented” | Screening and ranking components exist; bounded path recovery supports subgraph construction. Standalone bridge-concept output and integrated evaluation remain unfinished. |
+| “Shortest-path nodes give the formation mechanism” | Structural paths can supply association evidence; scientific mechanisms require paper-level grounding. `eval_3hop.py` recovers paths for subgraph construction, while `show_bridges` displays endpoint candidates and labels. Standalone bridge-concept output remains unfinished. |
 | “Not traditional link prediction” / superiority over named baselines | Describe the actual temporal objective; no categorical exclusion or unrun baseline comparison is claimed. |
 | Suggested CLI files and MIT license | Use existing commands and preserve pending license status. |
 

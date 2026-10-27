@@ -1,5 +1,9 @@
 # Research presentation snapshot — 2026-10-26
 
+## 2026-10-27 — Concise academic README and staged design
+
+Condensed both READMEs into a more formal research overview while retaining the seven-section narrative and fish-oil diagrams. Added the Screen → Rank → Bridge → downstream-validation design, three implemented hub controls and the illustrative Phosphide/Lightning bridge format. Clarified bounded path recovery in the historical three-hop evaluator and distinguished it from unfinished standalone bridge output and scientific mechanism validation. Research code and experiment records remain unchanged.
+
 ## 2026-10-27 — Author-directed Catalyst narrative
 
 Rewrote both READMEs around the author's supplied seven-section narrative: literature-discovery motivation, topology-first design, implemented features and neural models, method evolution, reasons for pausing, future directions and repository usage. Added original bilingual SVGs explaining the fish-oil/Raynaud A–B–C literature example, primary-source links and GitHub-compatible math formatting. Updated README structure checks to match the supplied outline. Research code, archived source versions and experiment records are unchanged.
