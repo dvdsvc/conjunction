@@ -272,3 +272,5 @@ uv run --locked --extra train python -B -m scripts.check_repository
 5. [OpenAlex — Concepts (deprecated)](https://help.openalex.org/data/concepts/).
 6. Kirschvink, J. L. (1992). [Late Proterozoic Low-Latitude Global Glaciation: the Snowball Earth](https://authors.library.caltech.edu/records/vaysf-cca32). In *The Proterozoic Biosphere: A Multidisciplinary Study*.
 7. Hess, B. L., Piazolo, S., & Harvey, J. (2021). [Lightning strikes as a major facilitator of prebiotic phosphorus reduction on early Earth](https://www.nature.com/articles/s41467-021-21849-2). *Nature Communications*.
+
+凭据配置与发布前检查：[安全说明](docs/security.md)。

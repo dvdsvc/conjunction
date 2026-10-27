@@ -24,3 +24,13 @@ checkpoints/
 *.csv
 *.jsonl
 *.log
+
+# Local authentication material (never publication payload)
+.netrc
+.pypirc
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+token.json

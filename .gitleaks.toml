@@ -1,0 +1,10 @@
+title = "Research showcase credential checks"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "mimo-token-plan-key"
+description = "MiMo Token Plan API credential, including SDK default arguments"
+regex = '''\btp-[A-Za-z0-9]{32,}\b'''
+keywords = ["tp-"]
