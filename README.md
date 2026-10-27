@@ -96,7 +96,7 @@ The system is designed around three stages, followed by validation by human expe
 ```mermaid
 flowchart TB
     S["Stage 1 · Screen<br/>BFS range and graph features<br/>Goal: retain potential connections"]
-    R["Stage 2 · Rank<br/>Transformer and structural feature fusion<br/>Goal: prioritize promising candidates"]
+    R["Stage 2 · Rank<br/>In-layer graph message passing and Transformer encoding<br/>Goal: prioritize promising candidates"]
     B["Stage 3 · Bridge<br/>Intermediate concepts on historical paths<br/>Goal: produce mechanism leads"]
     V["Downstream · Expert / Agent validation<br/>Trace papers; assess novelty and evidence"]
     S --> R --> B --> V
@@ -107,7 +107,7 @@ flowchart TB
 | Stage | Design objective | Current implementation |
 |---|---|---|
 | Screen | Reduce the search space with high recall | Distance, neighborhood and structural filters exist; protocols vary by version |
-| Rank | Order candidates with high precision | Transformer, PairMLP and GNN fusion with ranking training |
+| Rank | Order candidates with high precision | In-layer graph message passing, Transformer encoding, PairMLP and a separate GNN branch with ranking training |
 | Bridge | Provide bridging concepts for each pair | Path recovery and path-priority subgraph construction exist; standalone bridge output is incomplete |
 | Downstream validation | Assess scientific value | Proposed handoff to experts or agents |
 
@@ -123,7 +123,7 @@ The project explored several ways to describe a concept pair.
 |---|---|
 | BFS distance | Current shortest topological distance |
 | Bidirectional PPR-like propagation | Relative network position and reachability |
-| Ego-graph | Structure and organization of each local neighborhood |
+| Ego-graph and local adjacency | Preserve neighborhood nodes and direct edges for structural encoding and in-layer graph message passing |
 | Common-neighbor count | Number of existing indirect connections |
 | Common-neighbor degree distribution | Whether bridges are broad hubs or more specific concepts |
 | Adamic–Adar | Downweight highly connected common neighbors |
@@ -185,10 +185,22 @@ The later v15 implementation uses three PyTorch representation branches:
 | Branch | Main input | Role |
 |---|---|---|
 | PairMLP | 21 explicit graph features | Learn structural relationships between a node pair |
-| PENCIL-style Transformer | Local subgraph structure and precomputed semantic representations | Encode concept neighborhoods and candidate context |
+| PENCIL-style Transformer | Local nodes, adjacency encoding and precomputed semantic representations | Interleave attention and graph message passing inside Transformer layers |
 | SubgraphGNN | Two endpoints and their merged subgraph | Model graph connections around a candidate relationship |
 
 The three representations are fused to produce candidate ranking scores. This organization explores whether pair features, individual neighborhoods and merged subgraphs provide complementary information. The retained implementations and attribution notes document their relationship to existing recommendation models, graph-learning methods and third-party code.
+
+**The PENCIL branch itself contains graph computation.** Local nodes form the Transformer input, with representations combining local position, adjacency and semantic information. In v15, each node has 129 structural fields: 64 local-position fields, 64 adjacency fields and one normalized propagation score. This is distinct from the 21 pair features used by PairMLP.
+
+Each encoder layer performs attention, aggregates node states using local adjacency, applies a learned message transform and residual update, and then runs the feed-forward network. Four such layers precede pooling over valid nodes. Local edges therefore contribute both to input encoding and to representation updates inside the Transformer.
+
+```text
+Local structural and semantic node inputs
+  → attention → local-edge aggregation and residual update → feed-forward network
+  → repeat 4 layers → node pooling → PENCIL branch representation
+```
+
+Neighborhood construction varies by version. [Early v5](research/temporal/train_temporal_v5.py) selects a center concept and degree-ranked one-hop neighbors. [Later v15](research/temporal/train_temporal_v15.py) selects local nodes by PPR-like scores, then encodes their direct connections. Message passing uses one-hop edges within that selected graph. This in-layer module is separate from the parallel **SubgraphGNN**, which operates on the merged graph around both endpoints. See [Models](docs/models.md#graph-computation-inside-pencilencoder) for tensor layout and computation order.
 
 ### 4.3 Training and historical experiments
 

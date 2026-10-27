@@ -1,5 +1,9 @@
 # Research presentation snapshot — 2026-10-26
 
+## 2026-10-27 — Explain graph computation inside PENCIL
+
+Expanded both READMEs and model/feature documentation to distinguish scalar pair features, the graph-message updates interleaved inside temporal PENCIL Transformer layers and the separate merged-subgraph GNN. Documented early one-hop neighbor selection versus later PPR-based node selection, the adjacency input layout and the exact message contraction. Clarified PENCIL method attribution. All research implementations and experiment records remain unchanged.
+
 ## 2026-10-27 — Restore the fuller research narrative
 
 Revised both READMEs from the earlier author-directed narrative rather than the compressed summary. Restored motivation and reasoning, and expanded the account of graph sparsity, concept-identity errors, implementation repairs, task-protocol differences and the decision to pause. Retained the staged framework, hub controls, bridge example and quick start. Research code, results and archived versions are unchanged.

@@ -8,6 +8,8 @@ The concept encoder script uses pretrained `allenai/scibert_scivocab_uncased`, e
 
 For v15, each concept receives 64 local positions with a 129-wide structural tensor: 64 positional identity fields, 64 local adjacency fields and one normalized log propagation score. The retained fix passes the actual selected neighborhood IDs with that structure. Merged pair graphs use up to 256 nodes, with explicit local endpoint indices. The original padding value 0 conflicts with a valid concept ID; the retained fix uses -1 for merged-node padding.
 
+These node tensors encode an actual selected graph, not only summary statistics. The adjacency fields participate in the initial structural projection and are also extracted for graph-message updates inside every temporal PENCIL Transformer layer. Early temporal v5 selects direct neighbors; v15 selects nodes by PPR-like score and records direct edges among them. Keep this node-level graph representation separate from the 21-column pair-feature table below and from the merged graph consumed by the parallel SubgraphGNN. See [graph computation inside PencilEncoder](models.md#graph-computation-inside-pencilencoder).
+
 ## Temporal v15: exact 21-column order
 
 Source: [compute_all_pair_features and gravity features](../research/temporal/precompute_v15.py). Column names below describe the actual expressions, including duplicates and approximations.

@@ -2,7 +2,7 @@
 
 | Source | Local source identity inspected | Relationship to this snapshot |
 | --- | --- | --- |
-| [PENCIL](https://github.com/quang-truong/pencil) | `cd39f1a7ad471c28a434830ee4907db93d1999c4`; tracked checkout clean | Inspiration for local subgraph encoding and link-prediction adaptation; full upstream repository is not vendored |
+| [PENCIL](https://github.com/quang-truong/pencil) | `cd39f1a7ad471c28a434830ee4907db93d1999c4`; tracked checkout clean | Reference for subgraph encoding and interleaved Transformer/graph-message updates; local scientific input, candidate and fusion adaptations are retained; full upstream repository is not vendored |
 | [X algorithm / Phoenix](https://github.com/xai-org/x-algorithm) | `0bfc2795d308f90032544322747caacd535f75ae`; tracked checkout clean | Recommendation-inspired attention and input-role reference; scientific PyTorch adapter is a separate local implementation |
 | SciBERT | `allenai/scibert_scivocab_uncased` name in original encoder | Pretrained concept-name vectors; no model weights bundled |
 | MiniLM | Original title encoder uses a pretrained SentenceTransformers model | Supplied paper-title vectors; distinct from the SciBERT concept pipeline |
