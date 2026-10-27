@@ -9,3 +9,7 @@
 ## 2026-10-27 — Research README revision
 
 Expanded both READMEs around the Catalyst research question, temporal targets, graph/weight semantics, topology and semantic inputs, model/training design, unresolved protocol issues and executable entry points. Added a source-version/claim reconciliation page after inspecting the original working tree, nested server backup and code archive. PMI source-version reconciliation remains explicit. Preserved every research implementation and historical result; retained private GitHub visibility.
+
+## 2026-10-27 — Historical source archive
+
+Added 151 deduplicated historical source files (142 Python, 9 shell) with bilingual guides and a complete occurrence/hash index. Reused 25 identical research-core contents instead of duplicating them; retained differing versions and snapshots from four original Git commits. Excluded credential/control material and unrelated inputs, preserved original sources, and retained private GitHub visibility. No historical training or scientific scoring was rerun.

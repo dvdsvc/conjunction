@@ -45,3 +45,7 @@ uv run --locked --extra train python research/citation/eval_real_bridges.py --he
 ```
 
 Other historical scripts have unguarded top-level data loading; do not import every file indiscriminately. `build_pencil_data.py` is one such archival entry. FoS preprocessing reads an external Art_Business table/embedding layout and imports CuPy; see [requirements-gpu.txt](../requirements-gpu.txt) for the CUDA-specific optional package. The presentation does not automatically install GPU packages, download benchmark data, log in to a server or execute the excluded auto-shutdown scripts.
+
+## Historical versions
+
+[History guide](../history/README.md) and [source index](../history/source_index.json) preserve other versions and their sources. These modules are archival inputs, not a second automatic quick-start path. Some have import-time data loading or directory changes, old absolute server paths and incompatible caches. Do not import the history tree recursively or substitute its scripts into a current experiment without checking their contracts. Only syntax and source/index integrity were checked during archival; historical training was not rerun.

@@ -42,3 +42,7 @@ The owner recalls an implemented PMI-weighted version. Its exact source/call pat
 The [protocol page](training_evaluation.md) records candidate future filtering and metric denominators. The [model page](models.md) explains direct versus indirect candidate interactions and the retained v15 repairs. The [feature dictionary](features.md) distinguishes actual expressions from suggestive field names. Those problems are not silently repaired during README writing, and a successful synthetic optimization run is not promoted to a real-data result.
 
 This presentation foregrounds research design and implemented modeling effort while making the unfinished task/implementation boundary explicit. It introduces no new scientific experiment or original-source changes.
+
+## Historical sources now available
+
+The broader source inspection is now backed by a [deduplicated history archive](../history/README.md), including v6–v14 branches, candidate/retrieval variants and actual early Git snapshots. Its [source map](../history/source_index.json) makes omitted/different source versions inspectable alongside the curated core. Archival does not resolve the outstanding PMI source attribution or alter the target/label/evaluation findings above.

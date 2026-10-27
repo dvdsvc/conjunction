@@ -7,6 +7,7 @@ import subprocess
 import tomllib
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from scripts.check_history import inspect_history
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,6 +22,8 @@ def candidate_files() -> list[Path]:
 
 def main() -> None:
     failures: list[str] = []
+    history = inspect_history()
+    failures.extend(history['failures'])
     manifest = json.loads((ROOT / 'provenance/source_manifest.json').read_text())
     for entry in manifest['files']:
         path = ROOT / entry['path']
@@ -96,6 +99,7 @@ def main() -> None:
         'local_document_links_checked': link_count,
         'files_at_or_above_50_mib': oversized,
         'failures': failures,
+        'history': history,
         'scan_scope': 'heuristic token patterns and local paths; not an exhaustive security audit',
     }
     print(json.dumps(summary, indent=2, ensure_ascii=False))

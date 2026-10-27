@@ -24,3 +24,7 @@ Excluded material includes original corpora, full candidate indexes, model weigh
 ## Local preparation and subsequent private upload
 
 The candidate set is checked for common token/connection patterns, personal paths, syntax, internal links and oversized files. This heuristic check is not an exhaustive security or rights audit. The initial 2026-10-26 preparation was local-only and did not run remote training, download pretrained models or publish a package/site. The reviewed snapshot was subsequently uploaded to a private GitHub repository on 2026-10-27. The current README revision preserves private visibility, disabled Actions and no Pages; it changes documentation only. Confirm author/ownership and a distribution license before any public release.
+
+## Historical source extension — 2026-10-27
+
+The [history directory](../history/README.md) adds 151 source snapshots beyond the curated core. Its [index](../history/source_index.json) maps 597 retained occurrences to 176 distinct original contents, including 25 contents already represented in `research/`. Four original Git commits contribute actual file snapshots/metadata; the original repository history is not imported or modified. New copies are byte-identical except two documented personal-path substitutions. This archive includes exploratory, diagnostic and superseded code and introduces no claim of additional completed experiments.

@@ -150,6 +150,7 @@ Prepare a separate experiment directory, then add `--execute` as described in th
 research/temporal/       Representative graph, temporal model and evaluation versions
   fixes/                Previously retained v15 implementation repairs
 research/citation/      Paper tasks, encoders and recommendation/subgraph adaptations
+history/                Deduplicated historical versions and source/commit index
 research/fos/           FoS data adaptation and additional topology features
 docs/                  Graphs, feature columns, models, protocols, results and status
 examples/ / tests/      Synthetic pipeline and small numerical checks
@@ -160,4 +161,4 @@ provenance/            Source hashes and sanitized historical records
 
 First freeze a historical corpus and candidate universe, exclude existing direct edges and reserve future data for labels. With fixed identities, graph versions, candidate IDs, sampling and temporal windows, compare structural baselines, explicit-feature models, subgraph models and semantic fusion, reserving a separate test window. The PMI branch still needs source-version reconciliation. Bridge paths and paper-grounded explanations should be evaluated as a distinct output.
 
-Twenty-seven research Python files retain their source hashes. They document task design, model adaptation, data processing and experimentation; the original research code remains unchanged. The GitHub repository is private while documentation and versions are being consolidated. [Source provenance](docs/provenance.md) · [Third-party notices](THIRD_PARTY_NOTICES.md). A distribution license has not been selected for the local research; the supplied reference draft's MIT line is not adopted automatically.
+The curated core retains twenty-seven research Python files and their source hashes. The [historical archive](history/README.md) adds 151 source snapshots, maps 597 retained source occurrences, and records four original Git commits without changing the main entry points. They document task design, model adaptation, data processing and experimentation; the original research code remains unchanged. The GitHub repository is private while documentation and versions are being consolidated. [Source provenance](docs/provenance.md) · [Third-party notices](THIRD_PARTY_NOTICES.md). A distribution license has not been selected for the local research; the supplied reference draft's MIT line is not adopted automatically.
