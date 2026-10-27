@@ -21,6 +21,6 @@ New content comprises bilingual documentation, feature schema, minimal dependenc
 
 Excluded material includes original corpora, full candidate indexes, model weights/checkpoints, environments, private configuration, connection credentials, unrelated finance code in the server archive and automatic remote/server-control shell scripts. Public artifacts contain aggregate preparation statistics and explicitly synthetic outputs.
 
-## Local-only finish
+## Local preparation and subsequent private upload
 
-The candidate set is checked for common token/connection patterns, personal paths, syntax, internal links and oversized files. This heuristic check is not an exhaustive security or rights audit. The local repository has no remote. No real training-server access, pretrained model download, full-data GPU run, push, package release or website deployment is performed. Confirm author/ownership and a distribution license before public release.
+The candidate set is checked for common token/connection patterns, personal paths, syntax, internal links and oversized files. This heuristic check is not an exhaustive security or rights audit. The initial 2026-10-26 preparation was local-only and did not run remote training, download pretrained models or publish a package/site. The reviewed snapshot was subsequently uploaded to a private GitHub repository on 2026-10-27. The current README revision preserves private visibility, disabled Actions and no Pages; it changes documentation only. Confirm author/ownership and a distribution license before any public release.
