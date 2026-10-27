@@ -1,5 +1,9 @@
 # Research presentation snapshot — 2026-10-26
 
+## 2026-10-27 — Author-directed Catalyst narrative
+
+Rewrote both READMEs around the author's supplied seven-section narrative: literature-discovery motivation, topology-first design, implemented features and neural models, method evolution, reasons for pausing, future directions and repository usage. Added original bilingual SVGs explaining the fish-oil/Raynaud A–B–C literature example, primary-source links and GitHub-compatible math formatting. Updated README structure checks to match the supplied outline. Research code, archived source versions and experiment records are unchanged.
+
 - Preserved 27 scientific Python files byte-for-byte across citation, temporal and FoS branches, including the already-existing v15 repair pair.
 - Documented graph variants, exact feature order, model branches, losses, training configuration, candidate protocols and evaluation denominators.
 - Added local five-window preparation aggregates and explicitly labeled historical reported metrics; no successful prediction claim or new full-data result was invented.

@@ -2,6 +2,8 @@
 
 [Overview](../README.md) · [中文说明](../README.zh-CN.md) · [Graphs](graph_construction.md) · [Features](features.md) · [Models](models.md) · [Protocol](training_evaluation.md)
 
+The main READMEs now follow the author's later seven-section narrative, including the decision to pause the project. This page retains the technical source reconciliation from the earlier draft; the reference-statement table below concerns that earlier reference, not the current README outline.
+
 ## Why the expanded source audit matters
 
 The repository is a curated snapshot, not the full history of the original working directory. The 2026-10-27 README revision therefore inspected original root scripts, the paper-model directory, recursive `server_code` backups and the local source archive in addition to the selected 27 research files. The local server backup includes nested duplicate copies and July-dated source snapshots; it does not establish the current state of a live remote training server.

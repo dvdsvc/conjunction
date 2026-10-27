@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+<title id="title">Connecting two bodies of literature</title>
+<desc id="desc">Hypothesis: could fish oil alleviate Raynaud’s syndrome? Historical reasoning example; not established treatment efficacy or a Catalyst result.</desc>
+<defs><marker id="hypothesis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b66b2d"/></marker></defs>
+<style>text { font-family: 'PingFang SC', 'Heiti SC', 'Noto Sans CJK SC', Arial, sans-serif; } .main { fill:#18333d; font-weight:600; } .muted { fill:#526975; } .known { fill:none; stroke:#618d99; stroke-width:2.5; } </style>
+<rect width="1200" height="650" rx="20" fill="#f7fafb"/>
+<rect x="1" y="1" width="1198" height="648" rx="20" fill="none" stroke="#d9e4e8"/>
+<text x="54" y="64" font-size="30" class="main">Connecting two bodies of literature</text>
+<text x="54" y="100" font-size="18" class="muted">Swanson (1986) · A–B–C literature reasoning</text>
+<text x="385" y="176" text-anchor="middle" font-size="17" class="muted">Reported effects</text>
+<text x="815" y="176" text-anchor="middle" font-size="17" class="muted">Symptom associations</text>
+<text x="600" y="176" text-anchor="middle" font-size="19" class="main">B · Bridging factors</text>
+<path class="known" d="M315 310 C390 310 390 235 465 235 M315 310 H465 M315 310 C390 310 390 385 465 385"/>
+<path class="known" d="M735 235 C810 235 810 310 885 310 M735 310 H885 M735 385 C810 385 810 310 885 310"/>
+
+<rect x="65" y="225" width="250" height="170" rx="18" fill="#e7f1f3" stroke="#8fb0ba"/>
+<text x="89" y="260" font-size="19" font-weight="600" fill="#387387">A</text>
+<text x="190" y="310" text-anchor="middle" font-size="27" class="main">Fish oil</text>
+<text x="190" y="365" text-anchor="middle" font-size="17" class="muted">Literature group A</text>
+<rect x="885" y="225" width="250" height="170" rx="18" fill="#e7f1f3" stroke="#8fb0ba"/>
+<text x="909" y="260" font-size="19" font-weight="600" fill="#387387">C</text>
+<text x="1010" y="294" text-anchor="middle" font-size="27" class="main">Raynaud’s</text>
+<text x="1010" y="327" text-anchor="middle" font-size="27" class="main">syndrome</text>
+<text x="1010" y="365" text-anchor="middle" font-size="17" class="muted">Literature group C</text>
+<rect x="465" y="207" width="270" height="56" rx="12" fill="#ffffff" stroke="#a5bdc6"/><text x="600" y="242" text-anchor="middle" font-size="22" class="main">Blood viscosity</text>
+<rect x="465" y="282" width="270" height="56" rx="12" fill="#ffffff" stroke="#a5bdc6"/><text x="600" y="317" text-anchor="middle" font-size="22" class="main">Platelet aggregation</text>
+<rect x="465" y="357" width="270" height="56" rx="12" fill="#ffffff" stroke="#a5bdc6"/><text x="600" y="392" text-anchor="middle" font-size="22" class="main">Vascular reactivity</text>
+<path d="M190 406 C190 499 1010 499 1010 406" fill="none" stroke="#b66b2d" stroke-width="2.8" stroke-dasharray="9 7" marker-end="url(#hypothesis-arrow)"/>
+<text x="600" y="529" text-anchor="middle" font-size="23" font-weight="600" fill="#925323">Hypothesis: could fish oil alleviate Raynaud’s syndrome?</text>
+<path d="M265 570 H315" class="known"/>
+<text x="330" y="576" font-size="16" class="muted">Reported connections</text>
+<path d="M650 570 H700" fill="none" stroke="#b66b2d" stroke-width="2.5" stroke-dasharray="8 6"/>
+<text x="715" y="576" font-size="16" class="muted">Proposed hypothesis</text>
+<text x="600" y="619" text-anchor="middle" font-size="15" class="muted">Historical reasoning example; not established treatment efficacy or a Catalyst result.</text>
+</svg>

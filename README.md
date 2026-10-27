@@ -1,164 +1,261 @@
-# Catalyst: Learning Emerging Scientific Relations from Temporal Graphs
+# Catalyst: Finding Connections Yet to Be Made in Scientific Knowledge Networks
 
-<img src="assets/mark.svg" width="72" alt="Structural, semantic and local graph representations of scientific concepts" />
+**Literature-Based Discovery · Temporal Knowledge Graphs · Scientific Hypothesis Generation**
 
-**A research prototype that uses changes in scientific concept networks to study which currently indirect relationships may become explicit in later literature.** The project explores temporal co-occurrence graphs, hub effects, structural features, subgraph representations and candidate ranking for literature-based discovery (LBD), with the longer-term goal of producing scientific relation candidates that can be checked against papers.
+**English** · [简体中文](README.zh-CN.md)
 
-**Status: research in progress.** The repository retains several graph, preprocessing, neural-model and training/evaluation implementations. Their task definitions and protocols still need consolidation, and some implementations have known problems. This README distinguishes the intended discovery task, the existing research routes and the work required to connect them. Catalyst is a working display name.
+> An unfinished research exploration: use the historical evolution of scientific concept networks to identify connections that have not yet been explicitly established, but may be worth investigating.
 
-[English](README.md) · [简体中文](README.zh-CN.md)
+The project began with a question: **How much knowledge in the scientific literature remains insufficiently connected, and can network structure and its evolution help us identify some of those connections?** The aim was to investigate this question, rather than introduce a new graph neural network or automatically prove scientific hypotheses.
 
-## 🔬 1. Research question
+The repository contains literature-network builders, graph features, neural ranking models and training pipelines. It has not produced reliable end-to-end scientific discovery results. Work is currently paused because of data quality, graph sparsity and the time required to address them.
 
-Two scientific concepts can each have substantial literature while remaining unconnected in the same study. One LBD approach is to use indirect links in the existing knowledge network to identify combinations worth investigating. If a historical graph contains `A—B—C` but no `A—C`, a later paper studying A and C together creates a new direct relation.
+---
 
-This project investigates **structural signals before such relations become explicit**: neighborhood overlap, dependence on generic hubs, local connectivity and temporal proximity. Text representations describe how concepts are expressed; topology describes where they occur in a network and which other concepts connect them. Their individual value and complementarity are empirical questions under a common task.
+## 1. Motivation: Low-Hanging Fruit in Scientific Knowledge
 
-“Topological collapse” is an intuitive description of an indirect path becoming a direct edge. Co-occurrence is an observable proxy, not automatic evidence of a scientific discovery or its mechanism. The intended output is a ranked set of relation candidates for subsequent examination of literature and scientific meaning.
+### 1.1 Fish oil and Raynaud's syndrome: undiscovered public knowledge
 
-## 🎯 2. Intended task and existing learning targets
+The initial inspiration came from Don R. Swanson's 1986 paper, [*Fish Oil, Raynaud's Syndrome, and Undiscovered Public Knowledge*](https://pubmed.ncbi.nlm.nih.gov/3797213/). Raynaud's syndrome involves abnormal peripheral circulation: cold or emotional stress can restrict blood flow to the fingers and toes.
 
-The intended discovery task freezes candidates at a historical cutoff, excludes existing direct edges and predicts whether a new edge appears in a later window. For a cumulative co-occurrence graph `G_t=(V,E_t)`:
+Swanson identified two relatively separate bodies of medical literature:
 
-```text
-Historical candidates: (u,v) ∉ E_t1
-Future label: y(u,v) = 1 if (u,v) ∈ E_t2, otherwise 0
-```
+- Studies of fish oil reported effects on blood viscosity, platelet aggregation and vascular reactivity.
+- Studies of Raynaud's syndrome connected these physiological factors with the condition's symptoms.
 
-“First” is relative to the collected literature history. Candidate selection must not use future outcomes, and graph semantics, concept identity and time boundaries must remain consistent.
+Bringing these findings together suggested a hypothesis worth testing: **Could fish oil alleviate Raynaud's syndrome?**
 
-The code explores several related but distinct formulations:
+![A–B–C literature reasoning: fish oil and Raynaud's syndrome are linked through blood viscosity, platelet aggregation and vascular reactivity; the dashed connection is a hypothesis.](assets/fish-oil-raynaud.en.svg)
 
-| Route | Target in the code | Relationship to the intended task |
-|---|---|---|
-| Paper citation / indirect-citation retrieval | Rank a cited or two-hop target paper given a source and its references | Early adaptation of recommendation and link models to scientific documents |
-| Concept-distance convergence | Rank historical pairs by `d_t1(u,v) − d_t2(u,v)` | Supervision for becoming closer, without requiring a future direct edge |
-| v15 graded ranking | Convert future **weighted distance** into relevance grades 0–4 | Later main implementation; not a strict first-new-edge label |
+*A schematic of the literature reasoning in Swanson (1986). Solid lines represent reported connections; the dashed line represents the resulting hypothesis. This is not an experimental result from Catalyst or evidence of established treatment efficacy.*
 
-A path shortening from four hops to two is convergence without direct connection. Likewise, a weighted-distance threshold is not a hop-count test. First association is therefore the research goal; convergence and graded ranking are existing exploratory learning routes. Their metrics are kept separate. [Task and graph definitions](docs/graph_construction.md).
+What interested me was the way the hypothesis emerged. The relevant knowledge was already public; someone still had to connect it. Conventional literature searches begin with a known question, which assumes the researcher knows what to search for. When fields rarely interact, their published findings may remain disconnected even when they could inform one another.
 
-## 🕸️ 3. Graph construction and hub handling
+This led me to ask whether we could start from the structure of scientific knowledge itself and actively look for potential connections, without requiring a researcher to formulate each question in advance.
 
-Original scripts read OpenAlex paper years and concept IDs, scores and levels; the main local sources concern geology and climate literature. Eligible concepts within one paper generate undirected co-occurrence relations. Level/score rules changed between versions, so identical-looking filenames do not establish identical graph semantics.
+### 1.2 Snowball Earth: different disciplines may hold different parts of an answer
 
-| Graph variant | Meaning | Usage boundary |
-|---|---|---|
-| Cumulative snapshot | All observed edges up to a cutoff | Historical knowledge state |
-| First-co-occurrence interval graph | Edges first observed in the current cutoff interval | New relations; not a substitute for cumulative history |
-| Weighted path graph | Edge costs followed by shortest-path computation | A proximity measure, distinct from the occurrence of an edge |
+Another inspiration was Snowball Earth. Neoproterozoic strata contain features that were difficult to explain, including evidence of low-latitude glaciation and cap carbonates immediately above glacial deposits. Meanwhile, climate dynamics had established the possibility of an ice–albedo feedback: expanding ice reflects more sunlight, causes further cooling and could drive the planet into a globally frozen state.
 
-**Hub effects are a concrete part of the design.** A short path through a generic, highly connected concept can carry different information from a specific local connection. The traceable v15 `build_weighted_adj` uses:
+Global freezing raised another question: how could Earth become warm again? In his [1992 Snowball Earth proposal](https://authors.library.caltech.edu/records/vaysf-cca32), Joseph Kirschvink connected the geological evidence with a possible escape mechanism. Global ice cover would strongly suppress chemical weathering that consumes atmospheric carbon dioxide, while volcanic outgassing could continue. Accumulating carbon dioxide could eventually produce enough greenhouse warming to end the frozen state.
 
-```text
-c(u,v) = log((degree(u) + degree(v)) / 2 + 1)
-```
+This connected sedimentary geology, paleomagnetism, climate dynamics, greenhouse warming and the long-term carbon cycle. In his [2009 historical account](https://doi.org/10.1111/j.1365-2451.2009.00716.x), Paul Hoffman described a substantial gap between geologists studying Proterozoic glacial deposits and climate dynamicists studying extreme glaciation before the late 1980s. One community had geological evidence; the other had theoretical tools that could help explain it, but the connection was not widely recognized.
 
-Dijkstra then computes path cost. This degree penalty makes hub-mediated paths more expensive. Feature construction separately includes Adamic–Adar and statistics restricted to lower-degree common neighbors. These are different structural mechanisms, without a demonstrated guarantee that all generic and useful bridging hubs are separated.
+This does not settle every debate about Snowball Earth, or imply that an algorithm could discover the entire theory. It illustrates a possibility that interests me:
 
-The source version for the reported PMI-weighted branch is still being reconciled. The expression above documents the identified implementation; it is not relabeled as probability-based PMI. The PPR-named propagation arrays also retain their actual recurrence rather than inheriting mathematical properties from a filename. [Graph/weight definitions](docs/graph_construction.md) · [Expanded version audit](docs/design_status.md).
+**Part of the answer to a persistent problem in one discipline may already exist in another, waiting to be connected.**
 
-## 🧩 4. Features: topology is central; SciBERT is one component
+I think of these opportunities as the “low-hanging fruit” of scientific knowledge. They need not be new laws of nature. They could be a useful combination of existing findings, a new explanation for an old problem, or a lead worth testing.
 
-The project extends beyond encoding concept names and taking cosine similarity. Its implementations represent explicit pair topology, individual concept neighborhoods and merged pair subgraphs.
+### 1.3 From literature retrieval to active discovery
 
-| Representation | Inputs | Intended information |
-|---|---|---|
-| Pair features | Bidirectional propagation scores, common neighbors, Jaccard, Adamic–Adar, degree and clustering | Proximity and neighborhood relationships |
-| Additional structural features | Low-degree common neighbors/Adamic–Adar, cohesion, second-order overlap and connectivity/path-strength proxies | More specific local support for a relationship |
-| Local concept structure | Up to 64 positions with 129-wide tensors: positional, adjacency and propagation fields | Structural patterns around a concept |
-| Merged pair graph | Up to 256 nodes, edges and local endpoint indices | The local environment connecting both endpoints |
-| Semantic input | Precomputed 768-dimensional SciBERT concept-name vectors in selected models | Textual descriptions of graph nodes |
+I wanted to explore a different starting point: analyze the structure of the literature, **identify relationships that have not yet been explicitly established but may be forming**, and then let researchers or AI scientist systems investigate and test them.
 
-Temporal v15 uses **15+6=21 pair features**. The separate FoS configuration adds fourteen topology fields, including core/Fiedler and neighbor-degree statistics, for a width of 35. Some columns are duplicated, and names such as `resistance_distance` denote heuristic proxies rather than exact effective resistance. [Exact feature expressions and order](docs/features.md).
+The intended output is a set of candidate scientific relationships with traceable literature sources, rather than a claim that a model has discovered a scientific law.
 
-SciBERT supplies fixed, precomputed node inputs in these models; it is neither the whole research method nor a foundation encoder trained here. Structural-only, semantic-only and combined comparisons remain needed to establish their respective contributions. This repository does not assert that semantics is ineffective or that every model is free of semantic inputs.
+---
 
-## 🧠 5. Model design and adaptation
+## 2. Core Design: Looking Beyond Semantic Similarity to Network Structure
 
-The later v15 architecture combines three branches:
+### 2.1 Why not predict relationships directly from semantic embeddings?
 
-```mermaid
-flowchart LR
-    A[21 pair topology features] --> P[PairMLP / 64 dimensions]
-    B[Local structure and node semantics] --> T[Subgraph Transformer / 256 dimensions]
-    C[Merged graph, endpoints and node inputs] --> G[SubgraphGNN / 128 dimensions]
-    P --> F[Concatenate 448 dimensions and fuse]
-    T --> F
-    G --> F
-    F --> S[Candidate ranking score]
-```
+This was an important design consideration from the beginning. Scientific names, classifications and descriptions already encode existing disciplinary organization: which field a concept belongs to, its place in a hierarchy and which definitions are close to it. I was concerned that relying mainly on semantic similarity could reproduce those existing classifications.
 
-PairMLP learns combinations of explicit pair features. The PENCIL-style encoder combines Transformer attention with local message updates. SubgraphGNN performs three residual message-passing layers and reads both endpoints plus a graph mean. Fusion produces a scalar ranking score, not a calibrated probability of discovery. [Original model](research/temporal/train_temporal_v15.py) · [Retained repair](research/temporal/fixes/train_temporal_v15_fix.py).
+For cross-disciplinary discovery, this creates a tension:
 
-The work adapts existing recommendation and graph-learning ideas to scientific tasks. Early Phoenix-style code maps source/history/candidate roles to papers and references. Later subgraph models change scientific node representations, candidate organization and ranking objectives. These are inspectable modeling and training adaptations; [upstream attribution](THIRD_PARTY_NOTICES.md) remains explicit.
+**The concepts we want to connect may be far apart in current disciplinary taxonomies, yet related through scientific mechanisms.**
 
-Candidate selection and neural ranking express a division of work—reduce the search space, then distinguish candidates—but a unified experiment has not established the recall benefit of an integrated two-stage system. Historical display scripts print concept names, scores and distance-change labels. A dedicated bridge-concept prediction head with paper-grounded mechanism explanations is not a validated current output.
+Similar names do not necessarily make a connection scientifically valuable. Conversely, concepts with very different meanings may be linked through a chain of mechanisms. A predominantly semantic model might find familiar relationships more easily than connections across established boundaries.
 
-## 📐 6. Training and evaluation
+The project therefore focused on **how relationships form, as well as how concepts are described**. Semantic information still has a role: the code uses precomputed SciBERT vectors in selected models. In the original design, however, semantics was auxiliary; network topology and its evolution were the main research objects.
 
-The training unit is an anchor and its candidate list. Temporal v15 samples 100 candidates by default, with replacement for shorter lists. The trainer uses AdamW, cosine scheduling, checkpoints and early stopping on validation NDCG. Defaults are batch size 8, learning rate `3e-4`, up to 30 epochs and patience 5; these are script settings rather than established optimal values.
+### 2.2 A scientific concept network as an evolving system
 
-Early convergence models use pairwise ranking. v15 uses graded relevance; the retained repair weights RankNet softplus terms by NDCG changes computed from current predicted ranks. The original weighting depends on input positions. Both variants remain available, and local repair checks are not evidence of retrained full-data gains.
+The initial plan was to use OpenAlex papers, citations, publication dates and concept labels to construct scientific concept networks over time. Papers provide the main observations: when two concepts occur together in a qualifying paper, they can be connected by a co-occurrence edge. Citations supply relationships between papers and support some earlier research routes.
 
-Five windows are represented: `2005→2012`, `2012→2015`, `2015→2017`, `2017→2021`, `2021→2024`. The v15 rolling entry trains on the first four and selects checkpoints on the fifth. That fifth window is validation in this procedure, not an independent untouched test set.
+At a historical cutoff $t$, the observable concept graph is:
 
-| Metric | Meaning in the retained implementation |
+$$
+G_t=(V,E_t)
+$$
+
+For concepts $u,v$ without a direct historical connection, the intended prediction is:
+
+$$
+P\big((u,v)\in E_{t+\Delta t}\mid G_{\leq t}\big)
+$$
+
+The original focus was on pairs with historical BFS distance greater than one: concepts linked indirectly, but not yet directly connected.
+
+One intuition was to imagine concept communities as evolving galaxies. Whether two galaxies approach one another depends on their surroundings, interactions and motion, as well as their current distance. Similarly, future connections between concepts may depend on common neighbors, local communities, hubs and changes in their neighborhoods.
+
+This is a heuristic analogy, not a claim that scientific networks follow a gravitational law. It motivates a concrete question:
+
+**Before two concepts become directly connected, are there recognizable changes in the network around them?**
+
+---
+
+## 3. Features and Research Ideas
+
+The project explored several ways to describe a concept pair.
+
+| Feature | Motivation |
 |---|---|
-| NDCG@K | Ranking graded 0–4 relevance within the evaluated candidate list |
-| Precision / Recall@K | Positives have grade ≥4; recall divides by positives in that sampled list |
-| MRR | Reciprocal rank of the first positive in the list |
-| Citation target-hit | A separate retrieval task: whether a particular indirect target is retrieved |
+| BFS distance | Current shortest topological distance |
+| Bidirectional PPR-like propagation | Relative network position and reachability |
+| Ego-graph | Structure and organization of each local neighborhood |
+| Common-neighbor count | Number of existing indirect connections |
+| Common-neighbor degree distribution | Whether bridges are broad hubs or more specific concepts |
+| Adamic–Adar | Downweight highly connected common neighbors |
+| Clustering coefficient | Connectivity within a local neighborhood |
+| Community membership (planned) | Whether concepts belong to the same knowledge community |
+| Temporal neighborhood changes (planned) | Whether the two neighborhoods are gradually approaching one another |
+| SciBERT | Semantic representations of concept text; the located encoding script uses concept names |
 
-These values are not interchangeable with global novel-edge recall. The original temporal aggregator also handles no-positive lists differently across metrics. [Sampling, denominators and evaluation contracts](docs/training_evaluation.md).
+BFS, propagation quantities, common neighbors, Adamic–Adar, local subgraphs and some structural statistics appear in different code versions. Community membership and continuous temporal change were considered in the design, but do not form a unified, validated implementation.
 
-## 🧪 7. Progress and unresolved research questions
+Another focus was **how to handle hubs**. Two specific concepts might both connect to “climate change,” but that broad connection may offer little useful research detail. A bridge through a less connected concept with a more specific mechanistic relationship could be more informative.
 
-Retained work includes multiple graph builders, distance/feature precomputation, neural architectures, ranking training and saved indexes for five windows. The `2021→2024` archive records 4,734 anchors and 1,831,632 candidate index entries. They establish actual preparation work, while original grouping/index inconsistencies prevent treating the archive as a verified complete training corpus.
+Later code assigns higher path costs to edges involving highly connected nodes:
 
-The small CPU example runs original graph/feature functions, the retained fusion model, forward/backward computation, three optimizer updates and ranking metrics. Its 70-node graph and 768-dimensional vectors are synthetic. It validates an execution path, not predictive performance on scientific data. [Execution and historical evidence](docs/results.md).
+$$
+c(u,v)=\log\left(\frac{\deg(u)+\deg(v)}{2}+1\right)
+$$
 
-| Open issue | Concrete observation | Consequence |
+Together with Adamic–Adar and features based on low-degree common neighbors, this was intended to reduce the influence of generic hubs. These features express research hypotheses; their predictive benefit is not assumed in advance.
+
+---
+
+## 4. Implementation and Method Evolution
+
+The project went through several changes in tasks and models. There was no single final algorithm fixed at the outset.
+
+### 4.1 From paper citations to concept relationships
+
+Early work adapted recommendation and link-prediction methods to scientific paper networks, using citations, semantic representations and candidate ranking to explore potential relationships. The focus then shifted to temporal concept co-occurrence graphs and prediction targets based on changes in historical graph distance. The v15 route added local subgraphs, structural features and multiple representation branches.
+
+Main source locations:
+
+- [Paper citations and early models](research/citation/)
+- [Temporal concept graph construction](research/temporal/build_temporal_data.py)
+- [Temporal feature precomputation](research/temporal/precompute_v15.py)
+- [v15 models and training](research/temporal/train_temporal_v15.py)
+- [Later repair versions](research/temporal/fixes/)
+
+### 4.2 Neural models
+
+The later v15 implementation uses three PyTorch representation branches:
+
+| Branch | Main input | Role |
 |---|---|---|
-| Target/candidate mismatch | v15 includes historical direct neighbors and filters candidates using future reachability | Existing scores do not establish future-blind new-edge discovery |
-| Distance/graph semantics | Weighted costs, hops and interval graphs differ; “first-hop-free” subtracts a constant one | Graph, label and positive definitions need to be frozen together |
-| Implementation consistency | Retained fixes address grouping, endpoint retention, padding, node/feature alignment and ranking weights | Local repair checks do not re-establish all historical results |
-| Predictive/explanation validation | No unified replayable real-data comparison, semantic/structure ablation or bridge-output evaluation | Isolated historical scores cannot support stable gains or mechanism discovery |
+| PairMLP | 21 explicit graph features | Learn structural relationships between a node pair |
+| PENCIL-style Transformer | Local subgraph structure and precomputed semantic representations | Encode concept neighborhoods and candidate context |
+| SubgraphGNN | Two endpoints and their merged subgraph | Model graph connections around a candidate relationship |
 
-The research has explored substantive graph and learning designs and exposed a central problem: translating a scientific discovery objective into a consistent, leakage-controlled training task. The next experiment should freeze that task before adding model complexity. [Design/status audit](docs/design_status.md).
+The three representations are fused to produce candidate ranking scores. This explored network information at different scales; it does not establish that a more complex model is better than a simpler one. The retained implementations and attribution notes document their relationship to existing recommendation models, graph-learning methods and third-party code.
 
-## ▶️ 8. Running the repository
+### 4.3 Training and historical experiments
 
-Use Python 3.11+ and [uv](https://docs.astral.sh/uv/) from the repository root:
+The research tried classification, pairwise ranking, BPR, distance-change ranking and ranking losses with NDCG-based weights. Results were unsatisfactory and did not establish a consistent, reliable scientific discovery capability.
 
-```bash
-uv sync --locked --extra train
-uv run --locked --extra train python -B -m tests.test_research_contracts
-uv run --locked --extra train python -B -m examples.synthetic_pipeline
-uv run --locked --extra train python -B -m scripts.check_repository
-```
+Temporal experiments used multiple historical windows covering parts of 2005–2024. The repository retains candidate construction, training, evaluation and historical records. Different versions also used different targets: later v15 experiments mainly learned relevance grades derived from future weighted distances, which is not the same task as predicting the first direct connection between concepts.
 
-These are offline mechanism checks after dependency installation. Full research runs additionally require paper records, concept ordering, matching graph/propagation matrices, semantic inputs where used, and checkpoints. Full corpora and weights are not bundled. The path dispatcher defaults to showing a plan:
+These versions are retained as stages of the research process. Their metrics are not combined into a single final score for one task.
 
-```bash
-uv run --locked --extra train python -B -m scripts.run_research
-uv run --locked --extra train python -B -m scripts.run_research --task precompute-v15-fix --data-root data/pencil_data -- --fold 0
-```
+[Models](docs/models.md) · [Training and evaluation protocol](docs/training_evaluation.md) · [Historical results](docs/results.md)
 
-Prepare a separate experiment directory, then add `--execute` as described in the [run guide](docs/reproducibility.md). Historical scripts can overwrite caches/checkpoints in the configured data root. Repaired precompute and training files must be used together.
+---
 
-```text
-research/temporal/       Representative graph, temporal model and evaluation versions
-  fixes/                Previously retained v15 implementation repairs
-research/citation/      Paper tasks, encoders and recommendation/subgraph adaptations
-history/                Deduplicated historical versions and source/commit index
-research/fos/           FoS data adaptation and additional topology features
-docs/                  Graphs, feature columns, models, protocols, results and status
-examples/ / tests/      Synthetic pipeline and small numerical checks
-provenance/            Source hashes and sanitized historical records
-```
+## 5. Why Is the Project Paused?
 
-## 🧭 9. Next steps and provenance
+The project reached several more fundamental obstacles while there were still model ideas to try.
 
-First freeze a historical corpus and candidate universe, exclude existing direct edges and reserve future data for labels. With fixed identities, graph versions, candidate IDs, sampling and temporal windows, compare structural baselines, explicit-feature models, subgraph models and semantic fusion, reserving a separate test window. The PMI branch still needs source-version reconciliation. Bridge paths and paper-grounded explanations should be evaluated as a distinct output.
+### 5.1 Sparse concept graphs
 
-The curated core retains twenty-seven research Python files and their source hashes. The [historical archive](history/README.md) adds 151 source snapshots, maps 597 retained source occurrences, and records four original Git commits without changing the main entry points. They document task design, model adaptation, data processing and experimentation; the original research code remains unchanged. The GitHub repository is private while documentation and versions are being consolidated. [Source provenance](docs/provenance.md) · [Third-party notices](THIRD_PARTY_NOTICES.md). A distribution license has not been selected for the local research; the supplied reference draft's MIT line is not adopted automatically.
+After restricting the discipline, concept level and historical window, many concepts had few useful connections. For first-time cross-disciplinary connections in particular, positive examples were scarce relative to the candidate space. This limited the training signal and made candidate selection and supervision harder to define.
+
+I tried several loss functions and ranking strategies without obtaining sufficiently strong, stable results. Increasing model complexity did not resolve the underlying problem.
+
+### 5.2 More noise than expected in OpenAlex concept labels
+
+This was the main reason I decided to pause the project. It used the legacy OpenAlex Concepts system, which offered large-scale scientific classifications, but concept labels and paper assignments were not consistently reliable in practice.
+
+For example, during manual inspection I encountered a suspected ambiguity involving `Lightning`: atmospheric lightning and Apple's Lightning connector may have been associated with labels carrying different meanings. This specific example still needs confirmation against the original concept IDs and paper records.
+
+Problems like this directly affect graph construction. Splitting one scientific concept across different nodes, or confusing different meanings of a term, can make graph connectivity diverge from actual relationships in the literature.
+
+**A particularly serious case is when the literature has already connected two concepts, but concept recognition or mapping errors make the constructed graph show no prior connection.**
+
+For a system meant to predict first connections, this can invalidate the task labels themselves. A more complex model may simply learn patterns in an incorrectly constructed network.
+
+OpenAlex has since [deprecated Concepts in favor of Topics](https://help.openalex.org/data/concepts/). Its official explanation discusses accuracy and maintenance problems with the earlier system. This is consistent with the data quality difficulties encountered here, but does not verify any particular erroneous record.
+
+### 5.3 Gaps between historical implementations and the research goal
+
+The many iterations also introduced issues involving candidate indices, node alignment, subgraph padding and ranking calculations. The retained `fixes/` versions address candidate grouping, endpoint preservation and conflicts between node IDs and padding values.
+
+Some later versions also included historically connected nodes as candidates and filtered candidates using future reachability. This differs from the original first-new-connection objective. The repairs mainly address implementation consistency; they do not bring every historical version under the original task definition.
+
+These issues are part of the research record, but prevent interpreting historical ranking scores directly as scientific discovery performance.
+
+### 5.4 A decision about research time
+
+Resuming this work would require prioritizing the concept system, data cleaning and task definition before adding another model component. Given the cost of repairing the data and retraining, I decided to preserve the code and experiment records and turn to other research.
+
+I still find the original question worthwhile. The available data foundation was not sufficient for the intended goal.
+
+---
+
+## 6. Future Directions
+
+If I return to the project, I would start with data sources and concept consistency. One possibility is biomedical literature with a more standardized terminology system, such as MEDLINE's MeSH annotations, together with appropriate concept mapping.
+
+This may offer better control over synonyms, ambiguity and concept hierarchies than directly using legacy OpenAlex Concepts. It would still require inspecting the actual data; it cannot be assumed to solve every problem.
+
+I would then redefine the training task explicitly:
+
+1. Freeze the concept set and existing connections at a historical cutoff.
+2. Select only concept pairs without a direct connection at that time.
+3. Construct structural, temporal and any necessary semantic features from historical information.
+4. Use future publications to identify candidates that form their first direct connection.
+5. Trace the underlying papers and intermediate knowledge, then have researchers or AI scientist systems assess the scientific significance.
+
+The aim remains **to find a small number of potential scientific connections worth serious investigation within a large literature**, rather than optimize a link-prediction score alone.
+
+---
+
+## 7. Repository Layout and Running the Code
+
+The repository preserves the main research code, historical versions, entry points and technical documentation.
+
+| Path | Contents |
+|---|---|
+| [`research/citation/`](research/citation/) | Paper-citation tasks and early models |
+| [`research/temporal/`](research/temporal/) | Temporal graphs, features, ranking models and training |
+| [`research/temporal/fixes/`](research/temporal/fixes/) | Later repair versions |
+| [`research/fos/`](research/fos/) | Related graph-learning experiments |
+| [`history/`](history/) | Historical source versions and records |
+| [`docs/`](docs/) | Models, data, experiments and implementation details |
+| [`examples/`](examples/) | Examples using synthetic data |
+| [`tests/`](tests/) | Basic numerical and implementation checks |
+
+A small synthetic example exercises graph construction, feature generation, model forward passes and backpropagation. It checks code execution paths; **it is not a complete scientific discovery demonstration**.
+
+Historical full-data training requires the original paper records, matching concept indices, graph matrices and model environment. Some large datasets and checkpoints are not distributed with this repository.
+
+See [Running and reproduction](docs/reproducibility.md) for commands. Code origins, historical versions and third-party attribution are documented in [Provenance](docs/provenance.md) and [Third-party Notices](THIRD_PARTY_NOTICES.md).
+
+---
+
+## References
+
+1. Swanson, D. R. (1986). [Fish Oil, Raynaud's Syndrome, and Undiscovered Public Knowledge](https://pubmed.ncbi.nlm.nih.gov/3797213/). *Perspectives in Biology and Medicine*.
+2. Hoffman, P. F., et al. (1998). [A Neoproterozoic Snowball Earth](https://pubmed.ncbi.nlm.nih.gov/9721097/). *Science*.
+3. Hoffman, P. F., & Schrag, D. P. (2000). [Snowball Earth](https://www.scientificamerican.com/article/snowball-earth/). *Scientific American*.
+4. Hoffman, P. F. (2009). [Pan-glacial—a third state in the climate system](https://doi.org/10.1111/j.1365-2451.2009.00716.x). *Geology Today*.
+5. [OpenAlex — Concepts (deprecated)](https://help.openalex.org/data/concepts/).
+6. Kirschvink, J. L. (1992). [Late Proterozoic Low-Latitude Global Glaciation: the Snowball Earth](https://authors.library.caltech.edu/records/vaysf-cca32). In *The Proterozoic Biosphere: A Multidisciplinary Study*.
+
+---
+
+*This repository brings together an earlier research exploration, including code, methods and experiment records from different stages. The project is unfinished and does not claim validated automatic scientific discovery.*

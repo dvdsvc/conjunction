@@ -81,10 +81,16 @@ def main() -> None:
                     failures.append(f"Broken/local-escape link: {path.relative_to(ROOT)} -> {target}")
     if oversized:
         failures.append(f"Files above 50 MiB: {oversized}")
-    for language in ('README.md', 'README.zh-CN.md'):
-        headings = re.findall(r'^## (.+)$', (ROOT / language).read_text(), re.M)
-        if len(headings) != 9:
-            failures.append(f"README section parity mismatch: {language}")
+    subsection_numbers = []
+    for language, references in (('README.md', 'References'), ('README.zh-CN.md', '参考资料')):
+        readme = (ROOT / language).read_text()
+        headings = re.findall(r'^## (.+)$', readme, re.M)
+        section_numbers = [int(match.group(1)) for heading in headings if (match := re.match(r'(\d+)\. ', heading))]
+        if section_numbers != list(range(1, 8)) or len(headings) != 8 or headings[-1] != references:
+            failures.append(f"README section order mismatch: {language}")
+        subsection_numbers.append(re.findall(r'^### (\d+\.\d+) ', readme, re.M))
+    if subsection_numbers[0] != subsection_numbers[1]:
+        failures.append('README bilingual subsection mismatch')
     for path in [ROOT / 'pyproject.toml', ROOT / 'uv.lock']:
         tomllib.loads(path.read_text())
     schema = json.loads((ROOT / 'docs/feature_schema.json').read_text())
