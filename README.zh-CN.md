@@ -1,6 +1,6 @@
-# Catalyst：从科学知识网络中寻找尚未建立的联系
+# Conjunction
 
-**Literature-Based Discovery · Temporal Knowledge Graphs · Scientific Hypothesis Generation**
+**探索科学知识网络中的时序连接预测与桥接概念。**
 
 [English](README.md) · **简体中文**
 

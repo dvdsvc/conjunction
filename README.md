@@ -1,6 +1,6 @@
-# Catalyst: Finding Connections Yet to Be Made in Scientific Knowledge Networks
+# Conjunction
 
-**Literature-Based Discovery · Temporal Knowledge Graphs · Scientific Hypothesis Generation**
+**Exploring Temporal Link Prediction and Bridge Concepts in Scientific Knowledge Networks.**
 
 **English** · [简体中文](README.zh-CN.md)
 
