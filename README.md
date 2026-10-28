@@ -8,7 +8,7 @@
 
 The project began with a question: **How much knowledge in the scientific literature remains insufficiently connected, and can network structure and its evolution help us identify some of those connections?**
 
-The project explored literature-network construction, graph features, neural ranking and training/evaluation, with bridge-concept explanation included in the overall design. **It is currently a paused research prototype**: code and experiment records are preserved, but reliable end-to-end scientific discovery results have not been established.
+The project develops literature networks, graph features, neural ranking, training and evaluation, with bridge-concept explanation included in the overall design.
 
 The early citation model rewrites parts of the X/Twitter [Phoenix](https://github.com/xai-org/x-algorithm/tree/0bfc2795d308f90032544322747caacd535f75ae/phoenix) framework in PyTorch, adapting its input features and training objective to scientific citation completion. See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream source and license.
 
@@ -108,12 +108,10 @@ flowchart TB
 
 | Stage | Design objective | Current implementation |
 |---|---|---|
-| Screen | Reduce the search space with high recall | Distance, neighborhood and structural filters exist; protocols vary by version |
+| Screen | Reduce the search space with high recall | Distance, neighborhood and structural filters |
 | Rank | Order candidates with high precision | In-layer graph message passing, Transformer encoding, PairMLP and a separate GNN branch with ranking training |
-| Bridge | Provide bridging concepts for each pair | Path recovery and path-priority subgraph construction exist; standalone bridge output is incomplete |
+| Bridge | Provide bridging concepts for each pair | Shortest-path recovery and path-priority subgraph sampling |
 | Downstream validation | Assess scientific value | Proposed handoff to experts or agents |
-
-High recall and high precision describe the intended division of work. A unified evaluation of the three-stage pipeline remains outstanding.
 
 ## 3. Feature Construction and Representation Learning
 
@@ -134,7 +132,7 @@ The project explored several ways to describe a concept pair.
 | Temporal neighborhood changes (planned) | Whether the two neighborhoods are gradually approaching one another |
 | SciBERT | Semantic representations of concept text; the located encoding script uses concept names |
 
-BFS, propagation quantities, common neighbors, Adamic–Adar, local subgraphs and some structural statistics appear in different code versions. Community membership and continuous temporal change were considered in the design, but do not form a unified, validated implementation.
+BFS, propagation quantities, common neighbors, Adamic–Adar, local subgraphs and some structural statistics are implemented across code versions. Community membership and continuous temporal change are planned extensions.
 
 ### 3.2 How do numerical features and graph structure enter the model?
 
@@ -162,19 +160,19 @@ Neighborhood construction varies by version. [Early v5](research/temporal/train_
 
 ### 3.3 Reducing generic hub effects
 
-Two specialized concepts may both connect to a broad term such as “climate change,” yet that short path may offer little specific research context. A less connected intermediate concept may provide a more concrete literature lead. The project explores three ways to reduce generic hub effects in paths and features:
+Two specialized concepts may both connect to a broad term such as “climate change,” yet that short path may offer little specific research context. A less connected intermediate concept may provide a more concrete literature lead. The project uses the following path costs and features:
 
 - **Path costs:** $c(u,v)=\log((\deg(u)+\deg(v))/2+1)$ increases the cost of paths involving highly connected nodes.
 - **Common-neighbor weighting:** Adamic–Adar reduces the contribution of highly connected intermediate nodes.
 - **Low-degree features:** common-neighbor counts and Adamic–Adar are also calculated using only neighbors below the median degree of nonzero-degree nodes, to capture more specific bridging evidence.
 
-These designs have [code implementations](research/temporal/precompute_v15.py); their predictive benefit requires controlled comparisons.
+[Feature-precomputation implementation](research/temporal/precompute_v15.py).
 
 ### 3.4 Bridge-concept prediction
 
-Candidate ranking asks which concepts may connect. The bridge stage then asks what intermediate knowledge could connect them. The design takes internal nodes on shortest paths between $A$ and $B$ in the historical co-occurrence graph as candidate bridges. Weighted graphs use shortest paths under the specified edge cost. These nodes provide mechanism leads; scientific mechanisms require supporting evidence from the original papers.
+Candidate ranking asks which concepts may connect. The bridge stage then asks what intermediate knowledge could connect them. The design takes internal nodes on shortest paths between $A$ and $B$ in the historical co-occurrence graph as candidate bridges. Weighted graphs use shortest paths under the specified edge cost. These intermediate concepts provide mechanism leads for each candidate relationship.
 
-Illustrative output format:
+The following design example uses the connection between lightning and prebiotic phosphorus chemistry reported by [Hess et al. (2021)](https://www.nature.com/articles/s41467-021-21849-2) to illustrate the bridge output format:
 
 ```text
 Candidate pair: (Phosphide, Lightning)
@@ -184,13 +182,11 @@ Interpretation: investigate lightning-driven phosphorus reduction and
                 prebiotic chemistry.
 ```
 
-This illustrates the intended output, not a saved prediction or recovered shortest path. The scientific connection is reported by [Hess et al. (2021)](https://www.nature.com/articles/s41467-021-21849-2); first co-occurrence requires verification against a specific historical cutoff.
-
-Historical [`eval_3hop.py`](history/workspace/eval_3hop.py) recovers shortest paths within a hop limit and prioritizes their nodes during subgraph selection. Existing [`show_bridges.py`](history/server_snapshot/show_bridges.py) displays ranked endpoint concepts and distance labels. Organizing intermediate path nodes into a standalone bridge output remains unfinished.
+Historical [`eval_3hop.py`](history/workspace/eval_3hop.py) recovers shortest paths within a hop limit and prioritizes their nodes during subgraph selection. Existing [`show_bridges.py`](history/server_snapshot/show_bridges.py) displays ranked endpoint concepts and distance labels.
 
 ### 3.5 Modeling intuition: a gravitational analogy for concept networks
 
-The project draws on an intuition from celestial mechanics: concept nodes resemble celestial bodies, node degree corresponds to mass, BFS distance to spatial distance, and the PPR distribution to a gravitational field. Common neighbors and knowledge communities play the roles of intermediate bodies and star clusters. Connection strength within a community can be compared to binding energy, while a new cross-community relationship resembles overcoming an existing binding. As neighborhood overlap and bridging relationships increase, two concepts may move closer in the network and eventually co-occur for the first time. This analogy explains the motivation for topological features and temporal modeling; it does not assume that concept networks obey physical gravitational dynamics.
+The project draws on an intuition from celestial mechanics: concept nodes resemble celestial bodies, node degree corresponds to mass, BFS distance to spatial distance, and the PPR distribution to a gravitational field. Common neighbors and knowledge communities play the roles of intermediate bodies and star clusters. Connection strength within a community can be compared to binding energy, while a new cross-community relationship resembles overcoming an existing binding. As neighborhood overlap and bridging relationships increase, two concepts may move closer in the network and eventually co-occur for the first time. This analogy motivates the topological features and temporal modeling.
 
 ## 4. Implementation and Method Evolution
 
@@ -210,11 +206,7 @@ Main source locations:
 
 ### 4.2 Training and historical experiments
 
-The research tried classification, pairwise ranking, BPR, distance-change ranking and ranking losses with NDCG-based weights. Results were unsatisfactory and did not establish a consistent, reliable scientific discovery capability.
-
-Temporal experiments used multiple historical windows covering parts of 2005–2024. The repository retains candidate construction, training, evaluation and historical records. Different versions also used different targets: later v15 experiments mainly learned relevance grades derived from future weighted distances, which is not the same task as predicting the first direct connection between concepts.
-
-These versions are retained as stages of the research process. Their metrics are not combined into a single final score for one task.
+The research tried classification, pairwise ranking, BPR, distance-change ranking and ranking losses with NDCG-based weights. Temporal experiments used multiple historical windows covering parts of 2005–2024. The repository retains candidate construction, training, evaluation and historical records. Different versions used different targets: later v15 experiments mainly learned relevance grades derived from future weighted distances. Section 5.3 describes the changes in task definition and candidate protocols.
 
 [Models](docs/models.md) · [Training and evaluation protocol](docs/training_evaluation.md) · [Historical results](docs/results.md)
 
@@ -246,6 +238,8 @@ Other problems concern the training task itself. Some later versions include his
 
 Implementation repairs do not automatically resolve these protocol differences. A new experiment would first need consistent historical graphs, candidate conditions and future labels. Existing distance-ranking results should be interpreted under their actual tasks, rather than treated as first-time scientific relationship prediction performance.
 
+Path search and subgraph sampling are retained in the bridge module. Subsequent interface work includes organizing the internal path nodes into a standalone bridge-concept output.
+
 ### 5.4 Why pause the work?
 
 Continuing would require revisiting the concept system, cleaning the data and fixing the task definition, followed by rebuilding graphs and retraining. These steps take more time than adding another model component, but more directly determine whether the results can be interpreted.
@@ -256,7 +250,7 @@ Given the repair and retraining cost, I decided to pause the project, preserve t
 
 If I return to the project, I would start with data sources and concept consistency. One possibility is biomedical literature with a more standardized terminology system, such as MEDLINE's MeSH annotations, together with appropriate concept mapping.
 
-This may offer better control over synonyms, ambiguity and concept hierarchies than directly using legacy OpenAlex Concepts. Its coverage and actual annotation quality would still require inspection.
+This may offer better control over synonyms, ambiguity and concept hierarchies than directly using legacy OpenAlex Concepts.
 
 I would then redefine the training task explicitly:
 
@@ -266,7 +260,7 @@ I would then redefine the training task explicitly:
 4. Use future publications to identify candidates that form their first direct connection.
 5. Trace the underlying papers and intermediate knowledge, then have researchers or AI scientist systems assess the scientific significance.
 
-The intended outcome is a small set of connections worth investigating, with traceable literature evidence. Network prediction, bridge explanation and scientific validation therefore need to be linked while remaining separately evaluated.
+The intended outcome is a small set of connections worth investigating, with traceable literature evidence.
 
 ## 7. Repository Layout and Running the Code
 
