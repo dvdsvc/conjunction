@@ -10,6 +10,8 @@ The project began with a question: **How much knowledge in the scientific litera
 
 The project explored literature-network construction, graph features, neural ranking and training/evaluation, with bridge-concept explanation included in the overall design. **It is currently a paused research prototype**: code and experiment records are preserved, but reliable end-to-end scientific discovery results have not been established.
 
+The early citation model rewrites parts of the X/Twitter [Phoenix](https://github.com/xai-org/x-algorithm/tree/0bfc2795d308f90032544322747caacd535f75ae/phoenix) framework in PyTorch, adapting its input features and training objective to scientific citation completion. See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream source and license.
+
 ## 1. Motivation: Low-Hanging Fruit in Scientific Knowledge
 
 ### 1.1 Fish oil and Raynaud's syndrome: undiscovered public knowledge
