@@ -1,5 +1,9 @@
 # Research presentation snapshot — 2026-10-26
 
+## 2026-10-28 — Add the gravitational modeling analogy
+
+Added the author-supplied celestial-mechanics analogy at the end of feature construction in both READMEs. It explains the intuition behind degree, BFS distance, propagation, neighborhood overlap and possible community evolution without claiming a physical force law or a completed community model. Research code and results are unchanged.
+
 ## 2026-10-27 — Put graph representations with feature construction
 
 Moved the neural representation explanation into the feature-construction section in both READMEs. Removed the implication that v15 introduced graph-in-Transformer computation or three-branch fusion: temporal v5 already includes interleaved graph updates, and archived v9 explicitly implements all three fusion branches. Kept version-specific dimensions as examples and corrected the implementation-history wording. Research code and experiment records are unchanged.

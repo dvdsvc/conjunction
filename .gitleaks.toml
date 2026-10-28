@@ -8,3 +8,38 @@ id = "mimo-token-plan-key"
 description = "MiMo Token Plan API credential, including SDK default arguments"
 regex = '''\btp-[A-Za-z0-9]{32,}\b'''
 keywords = ["tp-"]
+
+
+[[rules]]
+id = "langsmith-provider-token"
+description = "LangSmith service token, independent of model-provider credentials"
+regex = '''\b(?:lsv2_[A-Za-z0-9_]{20,}|ls__[A-Za-z0-9_]{20,})\b'''
+keywords = ["lsv2_", "ls__"]
+
+[[rules]]
+id = "research-service-credential-literal"
+description = "Literal AMap/Gaode, LangSmith/LangChain or OpenAlex credential, including environment fallbacks"
+regex = '''(?i)(?:amap|gaode|langsmith|langchain|openalex)[a-z0-9_.-]{0,48}(?:key|token|secret)[\x27\x22]?\s*(?:[:=]|,\s*)\s*[\x27\x22]([A-Za-z0-9_.-]{16,})[\x27\x22]'''
+secretGroup = 1
+keywords = ["amap", "gaode", "langsmith", "langchain", "openalex"]
+
+[[rules]]
+id = "amap-security-js-code"
+description = "AMap browser security code is still a service credential"
+regex = '''(?i)securityJsCode[\x27\x22]?\s*[:=]\s*[\x27\x22]([a-f0-9]{32})[\x27\x22]'''
+secretGroup = 1
+keywords = ["securityjscode"]
+
+[[rules]]
+id = "research-service-url-key"
+description = "Credential carried in AMap, OpenAlex or LangSmith URLs"
+regex = '''(?i)https?://(?:[a-z0-9-]+\.)?(?:amap\.com|openalex\.org|smith\.langchain\.com)/[^\s\x22\x27<>]{0,512}?[?&](?:api[_-]?key|key|access_token|token)=([A-Za-z0-9_.%-]{16,})'''
+secretGroup = 1
+keywords = ["amap.com", "openalex.org", "langchain.com"]
+
+[[rules]]
+id = "credential-query-parameter"
+description = "Explicit authentication query parameters, across service providers"
+regex = '''(?i)[?&](?:api[_-]?key|access_token|auth_token)=([A-Za-z0-9_.%-]{20,})'''
+secretGroup = 1
+keywords = ["api_key", "apikey", "api-key", "access_token", "auth_token"]

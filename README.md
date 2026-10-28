@@ -186,6 +186,10 @@ This illustrates the intended output, not a saved prediction or recovered shorte
 
 Historical [`eval_3hop.py`](history/workspace/eval_3hop.py) recovers shortest paths within a hop limit and prioritizes their nodes during subgraph selection. Existing [`show_bridges.py`](history/server_snapshot/show_bridges.py) displays ranked endpoint concepts and distance labels. Organizing intermediate path nodes into a standalone bridge output remains unfinished.
 
+### 3.5 Modeling intuition: a gravitational analogy for concept networks
+
+The project draws on an intuition from celestial mechanics: concept nodes resemble celestial bodies, node degree corresponds to mass, BFS distance to spatial distance, and the PPR distribution to a gravitational field. Common neighbors and knowledge communities play the roles of intermediate bodies and star clusters. Connection strength within a community can be compared to binding energy, while a new cross-community relationship resembles overcoming an existing binding. As neighborhood overlap and bridging relationships increase, two concepts may move closer in the network and eventually co-occur for the first time. This analogy explains the motivation for topological features and temporal modeling; it does not assume that concept networks obey physical gravitational dynamics.
+
 ## 4. Implementation and Method Evolution
 
 The retained code documents several changes in research tasks and models.
