@@ -4,11 +4,7 @@
 
 **English** · [简体中文](README.zh-CN.md)
 
-> Use the historical evolution of scientific concept networks to identify connections that have not yet been explicitly established, but may be worth investigating.
-
-The project began with a question: **How much knowledge in the scientific literature remains insufficiently connected, and can network structure and its evolution help us identify some of those connections?**
-
-The project develops literature networks, graph features, neural ranking, training and evaluation, with bridge-concept explanation included in the overall design.
+**Research question:** Can temporal graph structure help identify emerging links and bridge concepts in scientific knowledge networks? **Method:** Temporal graphs, 21 pair features, semantic and Transformer/GNN subgraph representations, graded distance ranking and path-based bridge analysis. **Key findings:** Candidate-index archives cover five windows from 2005 to 2024, with up to 1.83 million entries per window; research trials identify concept-label consistency as a central constraint.
 
 The early citation model rewrites parts of the X/Twitter [Phoenix](https://github.com/xai-org/x-algorithm/tree/0bfc2795d308f90032544322747caacd535f75ae/phoenix) framework in PyTorch, adapting its input features and training objective to scientific citation completion. See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream source and license.
 
